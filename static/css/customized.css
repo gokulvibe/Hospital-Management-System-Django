@@ -1,0 +1,54 @@
+.custom{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    flex-wrap: wrap;
+}
+
+.custombutton{
+    position: sticky;
+    top: 5rem;
+    left: 0;
+    z-index: 100;
+}
+
+.customnavbar{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.customhidebutton{
+    display: block;
+    margin: .5rem;
+    padding: .5rem;
+    background-color:rgb(77, 77, 77);
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 100px;
+    box-shadow: 1rem 0 2rem rgba(#fff, .3);
+    width: 30%;
+    text-align: center;
+}
+
+.customfooterbuttons{
+    display: inline-flex;
+}
+
+.custompara{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.custombutton2{
+    justify-content: center;
+}
+
+.customfriendslist{
+    max-width: max-content;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+}
