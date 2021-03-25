@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User,auth
+from .models import *
+from django.contrib import messages
 # Create your views here.
 
 def login(request):
@@ -11,7 +14,7 @@ def login(request):
             password=request.POST["password"]
             user=auth.authenticate(username=user_id,password=password)
             try:
-                userObject = User.objects.get(username=email)
+                userObject = User.objects.get(username=user_id)
             except User.DoesNotExist:
                 userObject = None
             
@@ -27,3 +30,23 @@ def login(request):
                 return redirect('login')
         else:
             return render(request,'accounts/login.html')
+        
+        
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
+
+
+def profile(request):
+    if request.user.is_authenticated:
+        if StaffProfile.objects.filter(user=request.user).exists():
+            return render(request, 'accounts/AS-Profile.html')
+        
+        elif DoctorProfile.objects.filter(user=request.user).exists():
+            return render(request, 'accounts/default.html')
+        
+        else:
+            return render(request, 'accounts/default2.html')
+    
+    else:
+        return redirect('login')
