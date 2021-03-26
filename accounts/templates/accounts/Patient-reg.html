@@ -41,6 +41,12 @@
             </nav>
         </section>
         <!--Get in touch-->
+        <div id="ErrorMessage">
+            {% for message in messages %}
+            <h3>{{message}}</h3>
+            {% endfor %}
+         </div>
+         
         <section id="contact">
             <div class="container">
                 <h2>Patient Registration</h2>

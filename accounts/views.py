@@ -66,13 +66,16 @@ def profile(request):
 def register_staff(request):
     if request.method == 'POST':
         if request.user.groups.filter(name="administrative_staff_user").exists():
+            email = request.POST['email']
+            if User.objects.filter(email=email).exists():
+                messages.info(request,'Account with the given email already exists, please try to login instead.')
+                return redirect('register_staff')
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             full_name = first_name + " " + last_name
             date_of_birth = request.POST['date_of_birth']
             blood_group = request.POST['blood_group']
             age = request.POST['age']
-            email = request.POST['email']
             contact_number = request.POST['contact_number']
             profile_pic = request.FILES.get('image')
             date_of_joining = request.POST['date_of_joining']
@@ -147,6 +150,10 @@ def register_staff(request):
 def register_patient(request):
     if request.method == 'POST':
         if request.user.groups.filter(name="administrative_staff_user").exists():
+            email = request.POST['email']
+            if User.objects.filter(email=email).exists():
+                messages.info(request,'Account with the given email already exists, please try to login instead.')
+                return redirect('register_patient')
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             full_name = first_name + " " + last_name
@@ -154,7 +161,6 @@ def register_patient(request):
             blood_group = request.POST['blood_group']
             age = request.POST['age']
             diagnosis = request.POST['diagnosis']
-            email = request.POST['email']
             contact_number = request.POST['contact_number']
             profile_pic = request.FILES.get('image')
             accepted_date = request.POST['accepted_date']
@@ -223,13 +229,16 @@ def register_patient(request):
 def register_doctor(request):
     if request.method == 'POST':
         if request.user.groups.filter(name="administrative_staff_user").exists():
+            email = request.POST['email']
+            if User.objects.filter(email=email).exists():
+                messages.info(request,'Account with the given email already exists, please try to login instead.')
+                return redirect('register_doctor')
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             full_name = first_name + " " + last_name
             date_of_birth = request.POST['date_of_birth']
             blood_group = request.POST['blood_group']
             age = request.POST['age']
-            email = request.POST['email']
             contact_number = request.POST['contact_number']
             profile_pic = request.FILES.get('image')
             date_of_joining = request.POST['date_of_joining']

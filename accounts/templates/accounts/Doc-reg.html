@@ -41,6 +41,13 @@
             </nav>
         </section>
         <!--Get in touch-->
+
+        <div id="ErrorMessage">
+            {% for message in messages %}
+            <h3>{{message}}</h3>
+            {% endfor %}
+         </div>
+         
         <section id="contact">
             <div class="container">
                 <h2>Doctor Registration</h2>
@@ -102,7 +109,7 @@
                         
                             <div class="col-md-6 contact info">
                                 
-                                <button type="submit" form="doctor-register-form" class="btn btn-primary">Create New Staff Profile</button>
+                                <button type="submit" form="doctor-register-form" class="btn btn-primary">Create New Doctor Profile</button>
 
                             </div>
                         </form>

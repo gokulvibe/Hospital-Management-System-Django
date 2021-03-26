@@ -1,6 +1,6 @@
 <html>
    <head>
-      <title>The Gentleman Clocks</title>
+      <title>Team 10 - HMS</title>
       <link rel="stylesheet" href="style.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -41,6 +41,13 @@
             </nav>
         </section>
         <!--Get in touch-->
+        
+        <div id="ErrorMessage">
+            {% for message in messages %}
+            <h3>{{message}}</h3>
+            {% endfor %}
+         </div>
+
         <section id="contact">
             <div class="container">
                 <h2>Profile</h2>
