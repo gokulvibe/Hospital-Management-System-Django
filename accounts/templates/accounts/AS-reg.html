@@ -34,6 +34,9 @@
                         <a class="nav-link" href="Edit.html">Edit</a>
                     </li>
                     <li class="nav-item">
+                        <p>Logged in as {{user.first_name}} </p>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
@@ -41,7 +44,7 @@
             </nav>
         </section>
         <!--Get in touch-->
-        
+
         <div id="ErrorMessage">
             {% for message in messages %}
             <h3>{{message}}</h3>
