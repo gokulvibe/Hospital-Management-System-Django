@@ -5,6 +5,13 @@ from django.contrib import messages
 from django.http import HttpResponse
 import string
 from django.contrib.auth.models import Group
+from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
 # Create your views here.
 
 def login(request):
@@ -83,8 +90,8 @@ def register_staff(request):
             
             user=User.objects.create_user(username=username,email=email,password=password,first_name=first_name,last_name=last_name)
             user.save()
-            # user.is_active = False
-            # user.save()
+            user.is_active = False
+            user.save()
             print(username, password)
             
             print(profile_pic)
@@ -107,6 +114,23 @@ def register_staff(request):
             user.groups.add(staff_group)
             user.save()
             
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your HMS account.'
+            message = render_to_string('accounts/activation_email.html', {
+            'user': user,
+            'username': username,
+            'password': password,
+            'domain': current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+            })
+            email = EmailMessage(
+                    mail_subject, message, to=[email]
+                    )
+            email.content_subtype = 'html'
+            email.send()
+            
+            messages.info(request, "New Staff Profile has been created successfully.")
             return redirect('/')
             
         else:
@@ -147,8 +171,8 @@ def register_patient(request):
             
             user=User.objects.create_user(username=username,email=email,password=password,first_name=first_name,last_name=last_name)
             user.save()
-            # user.is_active = False
-            # user.save()
+            user.is_active = False
+            user.save()
             print(username, password)
             
             print(profile_pic)
@@ -167,7 +191,23 @@ def register_patient(request):
                 phone_number = contact_number)
             patient_profile.save()
             
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your HMS account.'
+            message = render_to_string('accounts/activation_email.html', {
+            'user': user,
+            'username': username,
+            'password': password,
+            'domain': current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+            })
+            email = EmailMessage(
+                    mail_subject, message, to=[email]
+                    )
+            email.content_subtype = 'html'
+            email.send()
             
+            messages.info(request, "New Patient Profile has been created successfully")
             return redirect('/')
             
         else:
@@ -207,8 +247,8 @@ def register_doctor(request):
             
             user=User.objects.create_user(username=username,email=email,password=password,first_name=first_name,last_name=last_name)
             user.save()
-            # user.is_active = False
-            # user.save()
+            user.is_active = False
+            user.save()
             print(username, password)
             
             print(profile_pic)
@@ -227,10 +267,23 @@ def register_doctor(request):
                 phone_number = contact_number)
             doctor_profile.save()
             
-            # staff_group = Group.objects.get(name='administrative_staff_user')
-            # user.groups.add(staff_group)
-            # user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your HMS account.'
+            message = render_to_string('accounts/activation_email.html', {
+            'user': user,
+            'username': username,
+            'password': password,
+            'domain': current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+            })
+            email = EmailMessage(
+                    mail_subject, message, to=[email]
+                    )
+            email.content_subtype = 'html'
+            email.send()
             
+            messages.info(request, "New Doctor Profile has been created successfully")
             return redirect('/')
             
         else:
@@ -242,3 +295,19 @@ def register_doctor(request):
         
         else:
             return HttpResponse("You do not have access to this page")
+        
+
+def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        #login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        # return redirect('home')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')

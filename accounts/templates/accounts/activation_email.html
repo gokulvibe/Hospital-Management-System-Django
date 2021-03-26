@@ -1,0 +1,7 @@
+{% autoescape off %}
+Hi {{ user.first_name }}, your account has been registered on Hospital Management System Created by Team 10.<br>
+Your Username is {{username}}.<br>
+Your Password is {{password}}.<br>
+Please click on the below link to confirm your registration and to activate your account.
+<a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" target="_blank">http://{{ domain }}{% url 'activate' uidb64=uid token=token %}</a>
+{% endautoescape %}
