@@ -181,4 +181,64 @@ def register_patient(request):
             return HttpResponse("You do not have access to this page")
 
 def register_doctor(request):
-    pass
+    if request.method == 'POST':
+        if request.user.groups.filter(name="administrative_staff_user").exists():
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            full_name = first_name + " " + last_name
+            date_of_birth = request.POST['date_of_birth']
+            blood_group = request.POST['blood_group']
+            age = request.POST['age']
+            email = request.POST['email']
+            contact_number = request.POST['contact_number']
+            profile_pic = request.FILES.get('image')
+            date_of_joining = request.POST['date_of_joining']
+            speciality = request.POST['speciality']
+            address = request.POST['address']
+            gender = request.POST['gender']
+            
+            counter = 1
+            username = "ST10DOC1"
+            while User.objects.filter(username=username):
+                username = "ST10DOC" + str(counter)
+                counter += 1
+                
+            password = User.objects.make_random_password(6, string.ascii_lowercase)
+            
+            user=User.objects.create_user(username=username,email=email,password=password,first_name=first_name,last_name=last_name)
+            user.save()
+            # user.is_active = False
+            # user.save()
+            print(username, password)
+            
+            print(profile_pic)
+            doctor_profile = DoctorProfile(
+                user=user,
+                doctor_id=username,
+                doctor_full_name = full_name,
+                profile_picture = profile_pic,
+                date_of_joining = date_of_joining,
+                speciality = speciality,
+                date_of_birth = date_of_birth,
+                gender = gender,
+                age = age,
+                blood_group = blood_group,
+                address = address,
+                phone_number = contact_number)
+            doctor_profile.save()
+            
+            # staff_group = Group.objects.get(name='administrative_staff_user')
+            # user.groups.add(staff_group)
+            # user.save()
+            
+            return redirect('/')
+            
+        else:
+            return HttpResponse("You do not have access to this submit this form")
+        
+    else:
+        if request.user.groups.filter(name="administrative_staff_user").exists():
+            return render(request, 'accounts\Doc-reg.html')
+        
+        else:
+            return HttpResponse("You do not have access to this page")

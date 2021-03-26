@@ -10,6 +10,7 @@ class DoctorProfile(models.Model):
     profile_picture = models.ImageField(upload_to='profile_pictures/doctor_profile_picture/')
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
+    date_of_joining = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     blood_group = models.CharField(max_length=10, blank=True, null=True)

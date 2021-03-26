@@ -1,6 +1,6 @@
 <html>
    <head>
-      <title>The Gentleman Clocks</title>
+      <title>Team 10 - HMS</title>
       <link rel="stylesheet" href="style.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,7 +28,7 @@
                         <a class="nav-link" href="/register-doctor">Doctor-registration</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register-doctor">AS-registration</a>
+                        <a class="nav-link" href="/register-staff">AS-registration</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="Edit.html">Edit</a>
@@ -44,70 +44,70 @@
         <section id="contact">
             <div class="container">
                 <h2>Doctor Registration</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <form class="contact-form">
+                <!-- <div class="row"> -->
+                    <!-- <div class="col-md-6"> -->
+                        <form class="staff-register-form" action = "/register-doctor/" method="post" id="doctor-register-form" enctype="multipart/form-data">
+                            {% csrf_token %}
                              <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Name">
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name">
                              </div>
                              <div class="form-group">
-                                <input placeholder = "Date of Birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                             </div>
+                             <div class="form-group">
+                                <label for="date_of_birth">Date of Birth</label>
+                                <input  name="date_of_birth" class = "form-control" type="date">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Doctor ID">
+                                <input type="text" class="form-control" name="blood_group" placeholder="Blood-Group">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Blood-Group">
+                                <input type="number" class="form-control" name="age" placeholder="Age">
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Age">
+                                <input type="text" class="form-control" name="gender" placeholder="Gender">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Department">
+                                <input type="email" class="form-control" name="email" placeholder="Email ID">
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email ID">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Contact number">
+                                <input type="text" class="form-control" name="contact_number" placeholder="Contact number">
                             </div>  
-                            <div class="row">
-                            <div class="col-md-6 contact info">
-                                
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                
-                            </div>
+                            <!-- <div class="row">
+                            
                             <div class="col-md-6 contact info">
                                 
                                     <button type="submit" class="btn btn-primary">Delete</button>
                                 
                             </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-6 contact info">
-                        <form class="contact-form">
+                            </div> -->
+                        
+                    <!-- </div> -->
+                    <!-- <div class="col-md-6 contact info"> -->
                             <div class="form-group">
-                                <label for="img">Select image:</label>
-                                <input type="file" id="img" name="img" accept="image/*">
+                                <label for="img">Select Profile Photo:</label>
+                                <input type="file" id="img" name="image" accept="image/*">
                             </div> 
                             <div class="form-group">
-                                <input placeholder = "Date of Joining" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <label for="date_of_joining">Date of Joining</label>
+                                <input name="date_of_joining" class = "form-control" type="date">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Qualification">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Previous medical conditions"></textarea>
+                                <input type="text" class="form-control" name="speciality" placeholder="Speciality">
                             </div>
                             
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" placeholder="Address"></textarea>
+                                <textarea class="form-control" rows="3" name="address" placeholder="Address"></textarea>
                             </div>
                         
+                            <div class="col-md-6 contact info">
+                                
+                                <button type="submit" form="doctor-register-form" class="btn btn-primary">Create New Staff Profile</button>
+
+                            </div>
                         </form>
-                    </div>
-                </div>
+                    <!-- </div> -->
+                <!-- </div> -->
             </div>
         </section>
         <!--footer-->
