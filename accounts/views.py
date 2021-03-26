@@ -65,7 +65,6 @@ def register_staff(request):
             date_of_birth = request.POST['date_of_birth']
             blood_group = request.POST['blood_group']
             age = request.POST['age']
-            department = request.POST['department']
             email = request.POST['email']
             contact_number = request.POST['contact_number']
             profile_pic = request.FILES.get('image')
@@ -101,8 +100,7 @@ def register_staff(request):
                 age = age,
                 blood_group = blood_group,
                 address = address,
-                phone_number = contact_number,
-                department = department)
+                phone_number = contact_number)
             staff_profile.save()
             
             staff_group = Group.objects.get(name='administrative_staff_user')
@@ -123,7 +121,64 @@ def register_staff(request):
 
 
 def register_patient(request):
-    pass
+    if request.method == 'POST':
+        if request.user.groups.filter(name="administrative_staff_user").exists():
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            full_name = first_name + " " + last_name
+            date_of_birth = request.POST['date_of_birth']
+            blood_group = request.POST['blood_group']
+            age = request.POST['age']
+            diagnosis = request.POST['diagnosis']
+            email = request.POST['email']
+            contact_number = request.POST['contact_number']
+            profile_pic = request.FILES.get('image')
+            accepted_date = request.POST['accepted_date']
+            address = request.POST['address']
+            gender = request.POST['gender']
+            
+            counter = 1
+            username = "ST10PAT1"
+            while User.objects.filter(username=username):
+                username = "ST10PAT" + str(counter)
+                counter += 1
+                
+            password = User.objects.make_random_password(6, string.ascii_lowercase)
+            
+            user=User.objects.create_user(username=username,email=email,password=password,first_name=first_name,last_name=last_name)
+            user.save()
+            # user.is_active = False
+            # user.save()
+            print(username, password)
+            
+            print(profile_pic)
+            patient_profile = PatientProfile(
+                user=user,
+                patient_id=username,
+                patient_full_name = full_name,
+                profile_picture = profile_pic,
+                accepted_date = accepted_date,
+                diagnosis = diagnosis,
+                date_of_birth = date_of_birth,
+                gender = gender,
+                age = age,
+                blood_group = blood_group,
+                address = address,
+                phone_number = contact_number)
+            patient_profile.save()
+            
+            
+            return redirect('/')
+            
+        else:
+            return HttpResponse("You do not have access to this submit this form")
+        
+    else:
+        if request.user.groups.filter(name="administrative_staff_user").exists():
+            return render(request, 'accounts\Patient-reg.html')
+        
+        else:
+            return HttpResponse("You do not have access to this page")
 
 def register_doctor(request):
     pass

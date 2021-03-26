@@ -43,10 +43,10 @@
         <!--Get in touch-->
         <section id="contact">
             <div class="container">
-                <h2>Administrative Staff Registration</h2>
+                <h2>Patient Registration</h2>
                 <!-- <div class="row"> -->
                     <!-- <div class="col-md-6"> -->
-                        <form class="patient-register-form" action = "/register-staff/" method="post" id="staff-register-form" enctype="multipart/form-data">
+                        <form class="patient-register-form" action = "/register-patient/" method="post" id="patient-register-form" enctype="multipart/form-data">
                             {% csrf_token %}
                              <div class="form-group">
                                 <input type="text" class="form-control" name="first_name" placeholder="First Name">
@@ -102,7 +102,7 @@
                         
                             <div class="col-md-6 contact info">
                                 
-                                <button type="submit" form="staff-register-form" class="btn btn-primary">Create New Staff Profile</button>
+                                <button type="submit" form="patient-register-form" class="btn btn-primary">Create New Patient Profile</button>
 
                             </div>
                         </form>

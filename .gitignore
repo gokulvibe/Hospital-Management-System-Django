@@ -12,7 +12,7 @@ venv/
 db.sqlite3
 
 #Uploaded files and images
-
+profile_pictures/
 
 
 # Windows
