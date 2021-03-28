@@ -298,3 +298,15 @@ ul {
 .copyright {
     text-align: center;
 }
+input[type="text"]:disabled {
+    background: #ffffff;
+  }
+  input[type="email"]:disabled {
+    background: #ffffff;
+  }
+  input[type="number"]:disabled {
+    background: #ffffff;
+  }
+  textarea[class="form-control"]:disabled {
+    background: #ffffff;
+  }

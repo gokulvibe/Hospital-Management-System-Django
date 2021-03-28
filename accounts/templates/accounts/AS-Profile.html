@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Team 10 - HMS</title>
+      <title>Team 10</title>
       <link rel="stylesheet" href="{% static 'css/style.css' %}">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,7 +14,7 @@
         <!--Navigation Bar-->
         <section id="navigation-bar">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#"><img src="images/Logo.png"></a>
+            <a class="navbar-brand" href="#"><img src="logo.png"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,19 +24,16 @@
                         <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/register-patient">Patient-registration</a>
+                        <a class="nav-link" href="/register-patient/">Patient-registration</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register-doctor">Doctor-registration</a>
+                        <a class="nav-link" href="/register-doctor/">Doctor-registration</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register-staff">AS-registration</a>
+                        <a class="nav-link" href="/register-staff/">AS-registration</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="Edit.html">Edit</a>
-                    </li>
-                    <li class="nav-item">
-                        <p>Logged in as {{user.first_name}} </p>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -46,67 +43,69 @@
             </nav>
         </section>
         <!--Get in touch-->
-
-        <div id="ErrorMessage">
-            {% for message in messages %}
-            <h3>{{message}}</h3>
-            {% endfor %}
-         </div>
-
         <section id="contact">
             <div class="container">
+                <div id="ErrorMessage">
+                    {% for message in messages %}
+                    <h3>{{message}}</h3>
+                    {% endfor %}
+                 </div>
                 <h2>Profile</h2>
-                <div class="row">
+                <form class="contact-form">
+                    <div class="row">
                     <div class="col-md-6">
-                        <form class="contact-form">
+                        
                              <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name">
+                                <input type="text" class="form-control" placeholder="Name" value="{{staff_details.staff_full_name}}" disabled>
                              </div>
                              <div class="form-group">
-                                <input placeholder = "Date of Birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <input placeholder = "Date of Birth" class = "form-control" value="{{staff_details.date_of_birth}}" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Staff ID">
+                                <input type="text" class="form-control" placeholder="Staff ID" value="{{staff_details.staff_id}}" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Blood-Group">
+                                <input type="text" class="form-control" placeholder="Blood-Group" value="{{staff_details.blood_group}}" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Age">
+                                <input type="number" class="form-control" placeholder="Age" value="{{staff_details.age}}" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Department">
+                                <input type="number" class="form-control" placeholder="Age" value="{{staff_details.gender}}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Department" value="{{staff_details.department}}" disabled>
                             </div>
                             
+                            
                             <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Previous medical conditions"></textarea>
-                            </div> 
-                            <div class="form-group">
-                                <input placeholder = "Date of Joining" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <input placeholder = "Date of Joining" class = "form-control" value="{{staff_details.dae_joined}}" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
                             </div>
                             <button type="submit" class="btn btn-primary">Edit</button>
-                        </form>
+                        
                     </div>
                     <div class="col-md-6 contact info">
-                        <form class="contact-form">
+                        
                             <div classs="form-group">
-                            <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
+                            <img src="{{staff_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Qualification">
+                                <input type="text" class="form-control" placeholder="Qualification" value="{{staff_details.qualification}}" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email ID">
+                                <input type="email" class="form-control" placeholder="Email ID" value="{{user.email}}" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Contact number">
+                                <input type="text" class="form-control" placeholder="Contact number" value="{{staff_details.phone_number}}" disabled>
                             </div> 
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" placeholder="Address"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="Address" value="{{staff_details.address}}" disabled></textarea>
                             </div>
-                        </form>
+                        
                     </div>
+                
                 </div>
+            </form>
             </div>
         </section>
         <!--footer-->
@@ -122,8 +121,8 @@
                     </div>
                 </div>
                 <div class="footer-col-2">
-                    <img src="images/logo.png">
-                    <p>our purpose is to sustainably make the richness and grandeur of clocks accessible to many.</p>
+                    <img src="logo.png">
+                    <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
                 </div> 
                 <div class="footer-col-3">
                     <h3>Useful links</h3>

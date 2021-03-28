@@ -1,9 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
 <html>
    <head>
-      <title>Team 10 - HMS</title>
-      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <title>Team 10</title>
+      <link rel="stylesheet" href="style.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
@@ -14,26 +12,20 @@
         <!--Navigation Bar-->
         <section id="navigation-bar">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#"><img src="images/Logo.png"></a>
+            <a class="navbar-brand" href="#"><img src="logo.png"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Profile</a>
+                        <a class="nav-link" href="Patient-profile.html">Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/register-patient">Patient-registration</a>
+                        <a class="nav-link" href="#">Pay Bill</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register-doctor">Doctor-registration</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register-staff">AS-registration</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Edit.html">Edit</a>
+                        <a class="nav-link" href="#">View Diagnosis</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -43,83 +35,66 @@
             </nav>
         </section>
         <!--Get in touch-->
-
-        <div id="ErrorMessage">
-            {% for message in messages %}
-            <h3>{{message}}</h3>
-            {% endfor %}
-         </div>
-
         <section id="contact">
             <div class="container">
+                <div id="ErrorMessage">
+                    {% for message in messages %}
+                    <h3>{{message}}</h3>
+                    {% endfor %}
+                 </div>
+                 <h2>Patient Profile</h2>
+                 <div class="col-md-6">
+                     <p style="text-align:right;">Hi there,{{user.first_name}} !!</p>
+                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <h2>Administrative Staff Registration</h2>
-                    </div>
-                    <div class="col-md-6">
-                        <h3 style="text-align:right;">Hi there,{{user.first_name}} !!</h3>
-                    </div>
-                </div>
-
-                <form class="staff-register-form" action = "/register-staff/" method="post" id="staff-register-form" enctype="multipart/form-data">
-                    <div class="row">
-                    <div class="col-md-6">
-                            {% csrf_token %}
-                             <div class="form-group">
-                                <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Name" disabled>
                              </div>
                              <div class="form-group">
-                                <input type="text" class="form-control" name="last_name" placeholder="Last Name">
-                             </div>
-                        
-                            <div class="form-group">
-                                <input placeholder = "Date of Birth" name="date_of_birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <input placeholder = "Date of Birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="blood_group" placeholder="Blood-Group">
+                                <input type="text" class="form-control" placeholder="Patient ID" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" name="age" placeholder="Age">
+                                <input type="text" class="form-control" placeholder="Blood-Group" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="gender" placeholder="Gender">
+                                <input type="number" class="form-control" placeholder="Age" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" placeholder="Email ID">
+                                <input type="text" class="form-control" placeholder="Doctor name" disabled>
                             </div>
+                             
                             <div class="form-group">
-                                <input type="text" class="form-control" name="contact_number" placeholder="Contact number">
-                            </div>  
+                                <textarea class="form-control" rows="5" placeholder="Previous medical conditions" disabled></textarea>
+                            </div>
                             
+                        
                     </div>
-                    
                     <div class="col-md-6 contact info">
-                            <div class="form-group">
-                                <label for="img">Select Profile Photo:</label>
-                                <input type="file" id="img" name="image" accept="image/*">
-                            </div> 
-                        
-                            <div class="form-group">
-                                <input placeholder = "Date of Joining" name="date_of_joining" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                            
+                            <div classs="form-group">
+                            <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="qualification" placeholder="Qualification">
+                                <input placeholder = "Date of First Admission" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Contact number" disabled>
+                            </div> 
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email ID" disabled>
                             </div>
                             
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" name="address" placeholder="Address"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="Address"  disabled></textarea>
                             </div>
-                        
-                            <div class="col-md-6 contact info">
-                                
-                                <button type="submit" form="staff-register-form" class="btn btn-primary">Create New Staff Profile</button>
-
-                            </div>
-                        
+                        </form>
                     </div>
                 </div>
-                <!-- </div> -->
-            </form>
             </div>
         </section>
         <!--footer-->
@@ -130,12 +105,12 @@
                     <h3>Download our app</h3>
                     <p>Download App for Android and IOS.</p>
                     <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/ios-store.png">
+                        <img src="play-store.png">
+                        <img src="ios-store.png">
                     </div>
                 </div>
                 <div class="footer-col-2">
-                    <img src="images/logo.png">
+                    <img src="logo.png">
                     <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
                 </div> 
                 <div class="footer-col-3">
@@ -158,7 +133,7 @@
                 </div>
             </div>
             <hr>
-            <p class="copyright">Copyright 2020 - Team 10</p>
+            <p class="copyright">Copyright 2020 - The Gentleman</p>
             </hr>
         </div>
         </div>

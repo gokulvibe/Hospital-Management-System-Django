@@ -36,9 +36,6 @@
                         <a class="nav-link" href="Edit.html">Edit</a>
                     </li>
                     <li class="nav-item">
-                        <p>Logged in as {{user.first_name}} </p>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
@@ -54,10 +51,17 @@
 
         <section id="contact">
             <div class="container">
-                <h2>Patient Registration</h2>
-                <!-- <div class="row"> -->
-                    <!-- <div class="col-md-6"> -->
-                        <form class="patient-register-form" action = "/register-patient/" method="post" id="patient-register-form" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Patient Registration</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 style="text-align:right;">Hi there,{{user.first_name}} !!</h3>
+                    </div>
+                </div>
+                <form class="patient-register-form" action = "/register-patient/" method="post" id="patient-register-form" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
                             {% csrf_token %}
                              <div class="form-group">
                                 <input type="text" class="form-control" name="first_name" placeholder="First Name">
@@ -93,8 +97,8 @@
                             </div>
                             </div> -->
                         
-                    <!-- </div> -->
-                    <!-- <div class="col-md-6 contact info"> -->
+                    </div>
+                    <div class="col-md-6 contact info">
                             <div class="form-group">
                                 <label for="img">Select Profile Photo:</label>
                                 <input type="file" id="img" name="image" accept="image/*">
@@ -116,9 +120,10 @@
                                 <button type="submit" form="patient-register-form" class="btn btn-primary">Create New Patient Profile</button>
 
                             </div>
-                        </form>
-                    <!-- </div> -->
-                <!-- </div> -->
+                        
+                    </div>
+                </div>
+            </form>
             </div>
         </section>
         <!--footer-->
@@ -135,7 +140,7 @@
                 </div>
                 <div class="footer-col-2">
                     <img src="images/logo.png">
-                    <p>our purpose is to sustainably make the richness and grandeur of clocks accessible to many.</p>
+                    <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
                 </div> 
                 <div class="footer-col-3">
                     <h3>Useful links</h3>
@@ -157,7 +162,7 @@
                 </div>
             </div>
             <hr>
-            <p class="copyright">Copyright 2020 - The Gentleman</p>
+            <p class="copyright">Copyright 2020 - Team 10</p>
             </hr>
         </div>
         </div>
