@@ -46,55 +46,57 @@
                  <div class="col-md-6">
                      <p style="text-align:right;">Hi there,{{user.first_name}} !!</p>
                  </div>
+                 <form class="contact-form">
                 <div class="row">
                     <div class="col-md-6">
-                        <form class="contact-form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Name" disabled>
-                             </div>
-                             <div class="form-group">
-                                <input placeholder = "Date of Birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Patient ID" disabled>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Blood-Group" disabled>
-                            </div>
-                            <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Age" disabled>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Doctor name" disabled>
-                            </div>
-                             
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Previous medical conditions" disabled></textarea>
-                            </div>
-                            
                         
-                    </div>
-                    <div class="col-md-6 contact info">
-                            
-                            <div classs="form-group">
-                            <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
-                            </div>
-                            <div class="form-group">
-                                <input placeholder = "Date of First Admission" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Contact number" disabled>
-                            </div> 
-                            <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email ID" disabled>
-                            </div>
-                            
-                            <div class="form-group">
-                                <textarea class="form-control" rows="3" placeholder="Address"  disabled></textarea>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Name" value="{{patient_details.patient_full_name}}" disabled>
+                        </div>
+                        <div class="form-group">
+                           <input placeholder = "Date of Birth" class = "form-control" value="{{patient_details.date_of_birth}}" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
+                       </div>
+                       <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Staff ID" value="{{patient_details.patient_id}}" disabled>
+                       </div>
+                       <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Blood-Group" value="{{patient_details.blood_group}}" disabled>
+                       </div>
+                       <div class="form-group">
+                           <input type="number" class="form-control" placeholder="Age" value="{{patient_details.age}}" disabled>
+                       </div>
+                       <div class="form-group">
+                           <input type="number" class="form-control" placeholder="Age" value="{{patient_details.gender}}" disabled>
+                       </div>
+                       <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Diagnosis" value="{{patient_details.diagnosis}}" disabled>
+                       </div>
+                       
+                       
+                       <div class="form-group">
+                           <input placeholder = "Date of Joining" class = "form-control" value="{{patient_details.accepted_date}}" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
+                       </div>
+                       <button type="submit" class="btn btn-primary">Edit</button>
+                   
+               </div>
+               <div class="col-md-6 contact info">
+                   
+                       <div classs="form-group">
+                       <img src="{{patient_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
+                       </div>
+                       <div class="form-group">
+                           <input type="email" class="form-control" placeholder="Email ID" value="{{user.email}}" disabled>
+                       </div>
+                       <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Contact number" value="{{patient_details.phone_number}}" disabled>
+                       </div> 
+                       <div class="form-group">
+                           <textarea class="form-control" rows="3" placeholder="Address" value="{{patient_details.address}}" disabled></textarea>
+                       </div>
+                   
+               </div>
                 </div>
+            </form>
             </div>
         </section>
         <!--footer-->

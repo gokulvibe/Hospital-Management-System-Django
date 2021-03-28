@@ -51,17 +51,26 @@ def profile(request):
     if request.user.is_authenticated:
         if StaffProfile.objects.filter(user=request.user).exists():
             staff_details = StaffProfile.objects.get(user=request.user)
-            
             return render(request, 'accounts/AS-Profile.html', context={'staff_details' : staff_details})
         
+        
+        
         elif DoctorProfile.objects.filter(user=request.user).exists():
-            return render(request, 'accounts/Doctor-Profile.html')
+            doctor_details = DoctorProfile.objects.get(user=request.user)
+            return render(request, 'accounts/Doctor-Profile.html', context={'doctor_details' : doctor_details})
+        
+        
         
         elif PatientProfile.objects.filter(user=request.user).exists():
-            return render(request, 'accounts/Patient-Profile.html')
+            patient_details = PatientProfile.objects.get(user=request.user)
+            return render(request, 'accounts/Patient-Profile.html', context={'patient_details' : patient_details})
         
+        
+
+
         else:
             return HttpResponse("Oh Shit bruh, something's wrong!")
+    
     
     else:
         return redirect('login')
