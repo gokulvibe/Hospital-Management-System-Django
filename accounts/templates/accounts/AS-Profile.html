@@ -88,9 +88,11 @@
                     </div>
                     <div class="col-md-6 contact info">
                         
+                            {% if staff_details.profile_picture %}
                             <div classs="form-group">
                             <img src="{{staff_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
                             </div>
+                            {% endif %}
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Qualification" value="{{staff_details.qualification}}" disabled>
                             </div>

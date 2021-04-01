@@ -12,6 +12,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def login(request):
@@ -77,6 +78,7 @@ def profile(request):
     
 
 #Registering staff user
+@login_required(login_url='/login')
 def register_staff(request):
     if request.method == 'POST':
         if request.user.groups.filter(name="administrative_staff_user").exists():
@@ -87,12 +89,14 @@ def register_staff(request):
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             full_name = first_name + " " + last_name
-            date_of_birth = request.POST['date_of_birth']
+            date_of_birth = request.POST['date_of_birth'] if request.POST['date_of_birth'] != '' else None
             blood_group = request.POST['blood_group']
-            age = request.POST['age']
+            age = request.POST['age'] if request.POST['age'] != '' else None
+                
+            print("Printing:", type(age), age)
             contact_number = request.POST['contact_number']
             profile_pic = request.FILES.get('image')
-            date_of_joining = request.POST['date_of_joining']
+            date_of_joining = request.POST['date_of_joining'] if request.POST['date_of_joining'] != '' else None
             qualification = request.POST['qualification']
             address = request.POST['address']
             gender = request.POST['gender']
@@ -147,7 +151,7 @@ def register_staff(request):
             email.content_subtype = 'html'
             email.send()
             
-            messages.info(request, "New Staff Profile has been created successfully.")
+            messages.info(request, "New Staff Profile has been created successfully. Activation Email Has been sent.")
             return redirect('/')
             
         else:
@@ -160,7 +164,7 @@ def register_staff(request):
         else:
             return HttpResponse("You do not have access to this page")
 
-
+@login_required(login_url='/login')
 def register_patient(request):
     if request.method == 'POST':
         if request.user.groups.filter(name="administrative_staff_user").exists():
@@ -171,13 +175,13 @@ def register_patient(request):
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             full_name = first_name + " " + last_name
-            date_of_birth = request.POST['date_of_birth']
+            date_of_birth = request.POST['date_of_birth'] if request.POST['date_of_birth'] != '' else None
             blood_group = request.POST['blood_group']
-            age = request.POST['age']
+            age = request.POST['age'] if request.POST['age'] != '' else None
             diagnosis = request.POST['diagnosis']
             contact_number = request.POST['contact_number']
             profile_pic = request.FILES.get('image')
-            accepted_date = request.POST['accepted_date']
+            accepted_date = request.POST['accepted_date'] if request.POST['accepted_date'] != '' else None
             address = request.POST['address']
             gender = request.POST['gender']
             
@@ -227,7 +231,7 @@ def register_patient(request):
             email.content_subtype = 'html'
             email.send()
             
-            messages.info(request, "New Patient Profile has been created successfully")
+            messages.info(request, "New Patient Profile has been created successfully. Activation Email Has been sent.")
             return redirect('/')
             
         else:
@@ -239,7 +243,7 @@ def register_patient(request):
         
         else:
             return HttpResponse("You do not have access to this page")
-
+@login_required(login_url='/login')
 def register_doctor(request):
     if request.method == 'POST':
         if request.user.groups.filter(name="administrative_staff_user").exists():
@@ -250,12 +254,12 @@ def register_doctor(request):
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             full_name = first_name + " " + last_name
-            date_of_birth = request.POST['date_of_birth']
+            date_of_birth = request.POST['date_of_birth'] if request.POST['date_of_birth'] != '' else None
             blood_group = request.POST['blood_group']
-            age = request.POST['age']
+            age = request.POST['age'] if request.POST['age'] != '' else None
             contact_number = request.POST['contact_number']
             profile_pic = request.FILES.get('image')
-            date_of_joining = request.POST['date_of_joining']
+            date_of_joining = request.POST['date_of_joining'] if request.POST['date_of_joining'] != '' else None
             speciality = request.POST['speciality']
             address = request.POST['address']
             gender = request.POST['gender']
@@ -306,7 +310,7 @@ def register_doctor(request):
             email.content_subtype = 'html'
             email.send()
             
-            messages.info(request, "New Doctor Profile has been created successfully")
+            messages.info(request, "New Doctor Profile has been created successfully. Activation Email Has been sent.")
             return redirect('/')
             
         else:

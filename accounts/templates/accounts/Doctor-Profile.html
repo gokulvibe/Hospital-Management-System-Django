@@ -43,9 +43,6 @@
                     {% endfor %}
                  </div>
                 <h2>Doctor's Profile</h2>
-                <div class="col-md-6">
-                    <p style="text-align:right;">Hi there,{{user.first_name}} !!</p>
-                </div>
                 <form class="contact-form">
                 <div class="row">
                     <div class="col-md-6">
@@ -81,9 +78,11 @@
                </div>
                <div class="col-md-6 contact info">
                    
-                       <div classs="form-group">
-                       <img src="{{doctor_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
-                       </div>
+                {% if staff_details.profile_picture %}
+                <div classs="form-group">
+                <img src="{{doctor_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
+                </div>
+                {% endif %}
                        <div class="form-group">
                            <input type="email" class="form-control" placeholder="Email ID" value="{{user.email}}" disabled>
                        </div>
@@ -100,7 +99,7 @@
             </div>
         </section>
         <!--footer-->
-        <div class="footer">
+        <!-- <div class="footer">
         <div class="container">   
             <div class="row">
                 <div class="footer-col-1">
@@ -138,6 +137,6 @@
             <p class="copyright">Copyright 2020 - The Gentleman</p>
             </hr>
         </div>
-        </div>
+        </div> -->
    </body>
 </html>

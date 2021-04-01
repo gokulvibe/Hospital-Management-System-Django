@@ -129,6 +129,8 @@ STATICFILES_DIRS=[
 MEDIA_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
 
+# LOGIN_URL = '/login'
+
 ###### SMTP Email Configurations ######
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
