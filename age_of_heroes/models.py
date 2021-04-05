@@ -18,5 +18,7 @@ class MedicalReport(models.Model):
     mri_scan = models.BooleanField()
     blood_sodium_level = models.FloatField()
     other_diagonosis = models.TextField()
+    previous_medical_conditions = models.TextField()
+    current_medical_condition = models.TextField()
     cause = models.CharField()
     height = models.FloatField()

@@ -160,6 +160,20 @@
     color: blue;
     padding: 5px;
 }
+#contact img {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+#list {
+    background: #efefef;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: #777;
+}
+#list img{
+    padding-top: 0px;
+    padding-bottom: 20px;;
+}
 
 
 /*account-page*/
