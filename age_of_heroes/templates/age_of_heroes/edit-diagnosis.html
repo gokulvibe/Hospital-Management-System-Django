@@ -19,19 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="Doctor-Profile.html">Profile</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="View-patient.html">View Patient list</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="View-patient-diagnosis.html">Edit Patient Diagnosis</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="Doctor-Appiontment.html">Today's Appointments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Account.html">Logout</a>
+                        <a class="nav-link" href="/edit-patient-diagnosis">Go Back</a>
                     </li>
                 </ul>
             </div>
@@ -45,12 +33,34 @@
                     <div class="col-md-6"><p style="text-align:right;">Hi there,user!!</p></div></div>
                 <div class="form-group">
                 </div>
-                <div class="form-group">
-                    <form method="GET">
-                    <input type="text" name="query" class="form-control" placeholder="Search for a profile by entering dedicated ID">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Name">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="10" placeholder="Diagnosis"></textarea>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-6 contact info">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                            <div class="col-md-6 contact info">
+                                <button type="submit" class="btn btn-primary">Cancel</button>
+                            </div>
+                            </div>
+                        
+                    </div>
+                    <div class="col-md-6 contact info">
+                        <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" placeholder="New medical conditions"></textarea>
+                        </div>
+                        </form>
+                    </div>
                 </div>
-                    <button type="submit" class="btn btn-primary" >Search </button>
-                    </form>
+            </div></div>
         </section>
         <!--footer-->
         <div class="footer">
@@ -94,4 +104,3 @@
         </div>
    </body>
 </html>
-

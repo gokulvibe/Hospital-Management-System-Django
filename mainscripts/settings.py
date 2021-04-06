@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'accounts.apps.AccountsConfig',
+    'age_of_heroes.apps.AgeOfHeroesConfig'
 ]
 
 MIDDLEWARE = [
