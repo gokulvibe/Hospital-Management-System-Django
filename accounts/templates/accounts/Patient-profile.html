@@ -1,7 +1,9 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
    <head>
       <title>Team 10</title>
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
@@ -26,6 +28,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">View Diagnosis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/patient_book_appointment">Book Appointment</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
