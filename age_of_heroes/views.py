@@ -4,6 +4,9 @@ from age_of_heroes.models import *
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.http import HttpResponse
 # Create your views here.
 
 @login_required(login_url='/login')
@@ -22,7 +25,7 @@ def patient_book_appointment(request):
             doctors = DoctorProfile.objects.all()
             for doctor in doctors:
                 appointments = Appointment.objects.filter(doctor=doctor, date=date).order_by('expected_time')
-                if len(appointments) < 50:
+                if len(appointments) < 35:
                     if len(appointments) == 0:
                         expected_time = datetime.time(10,0,0)
                     else:
@@ -36,6 +39,16 @@ def patient_book_appointment(request):
                     
                     new_appointment = Appointment(doctor=doctor, date=date, patient=patient, token_number=token_number, token_id=token_id, expected_time=expected_time, status='pending')
                     new_appointment.save()
+                    mail_subject = 'Appointment Booked in HMS'
+                    message = render_to_string('age_of_heroes/appointment_registered_email.html', {
+                    'user' : request.user,
+                    'appointment' : new_appointment,
+                    })
+                    email = EmailMessage(
+                            mail_subject, message, to=[request.user.email]
+                            )
+                    email.content_subtype = 'html'
+                    email.send()
                     break
             else:
                 messages.info(request, 'No doctor is free today, contact the receptionists for more details.')
@@ -48,7 +61,7 @@ def patient_book_appointment(request):
             doctor = DoctorProfile.objects.get(doctor_id=doctor_id)
             appointments = Appointment.objects.filter(doctor=doctor, date=date)
         
-            if len(appointments)>=50:
+            if len(appointments)>=35:
                 messages.info(request, 'The slots for your requested Doctor is full, choose another doctor or leave the field blank, so that we will assign you an available doctor.')
                 return redirect('patient_book_appointment')
             else:
@@ -65,6 +78,16 @@ def patient_book_appointment(request):
                 
                 new_appointment = Appointment(doctor=doctor, date=date, patient=patient, token_number=token_number, token_id=token_id, expected_time=expected_time, status='pending')
                 new_appointment.save()
+                mail_subject = 'Appointment Booked in HMS'
+                message = render_to_string('age_of_heroes/appointment_registered_email.html', {
+                'user' : request.user,
+                'appointment' : new_appointment,
+                })
+                email = EmailMessage(
+                        mail_subject, message, to=[request.user.email]
+                        )
+                email.content_subtype = 'html'
+                email.send()
                 
             messages.info(request, 'Appointment Booked Successfully!')
             return redirect('/appointment_booked_patient')
@@ -74,7 +97,22 @@ def patient_book_appointment(request):
 @login_required(login_url='/login')
 def appointment_booked_patient(request):
     patient = PatientProfile.objects.filter(user=request.user)[0]
-    appointment = Appointment.objects.filter(patient=patient, status='pending')[0]
-    doctor = appointment.doctor
     
-    return render(request, 'age_of_heroes\\appointment_booked_patient.html', context={'appointment' : appointment, 'doctor' : doctor})
+    try:
+        appointment = Appointment.objects.filter(patient=patient, status='pending')[0]
+    except:
+        appointment = None
+    return render(request, 'age_of_heroes\\appointment_booked_patient.html', context={'appointment' : appointment})
+
+@login_required(login_url='/login')
+def cancel_appointment_patient(request):
+    if request.method == 'POST':
+        appointment_id = request.POST['appointment_id']
+        appointment = Appointment.objects.get(pk = appointment_id)
+        appointment.delete()
+        
+        messages.info(request, 'Appointment cancelled successfully!')
+        return redirect('/appointment_booked_patient')
+    
+    else:
+        return HttpResponse("Dude, what are you tring to do?")

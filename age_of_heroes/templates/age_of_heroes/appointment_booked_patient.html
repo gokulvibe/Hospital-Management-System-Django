@@ -45,10 +45,11 @@
                         <h3>{{message}}</h3>
                         {% endfor %}
                      </div>
-                     <div class="col-md-6"><h2 style="text-align:right;">Your Appointments</h2></div></div>
+                     <div class="col-md-6"><h2 style="text-align:right;">Your Appointments</h2></div>
                     <div class="col-md-6"><p style="text-align:right;">Hi there,{{user.first_name}}</p></div>
                 </div>
 
+                {% if appointment is not None %}
                 <form class="contact-form">
                 <div class="row">
                     
@@ -75,13 +76,8 @@
                             <div class="row">
                             <div class="col-md-6 contact info">
                                 
-                                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Book</button>
                                 
-                            </div>
-                            <div class="col-md-6 contact info">
-                                
-                                    <button type="submit" class="btn btn-primary">Cancel</button>
-                                
+
                             </div>
                             </div>
                         
@@ -106,7 +102,18 @@
                     </div>
                 </div>
             </form>
+            <form action="/cancel_appointment_patient" method="POST" id="cancel_appointment">
+                {% csrf_token %}
+                <input type="text" name="appointment_id" value="{{appointment.pk}}" class="form-control" hidden>
+                <!-- <button type="submit" form="cancel_appointment" >Cancel Appointment</button> -->
+                <input type="submit" value="Cancel Appointment" form="cancel_appointment" class="btn btn-primary">
+            </form>
             </div>
+
+            {% else %}
+            <h1>You do not have any appointment yet, please book a appointment if you have to visit a doctor.</h1>
+
+            {% endif %}
         </section>
         <!--footer-->
         <div class="footer">
