@@ -38,10 +38,11 @@ def edit_diagnosis(request):
         m.blood_sugar_level=request.POST['sugar_level']
         m.blood_pressure=request.POST['blood_pressure']
         m.weight=request.POST['weight']
-        m.height=request.POSt['height']
+        m.height=request.POST['height']
         m.current_medical_condition=request.POST['current_conditions']
         m.current_medical_condition=m.current_medical_condition+'       '+new
         m.save()
+        messages.info(request, "the diagnosis is updated sucessfully")
         return render(request, 'age_of_heroes/edit-diagnosis.html',context={'patient_details' : p ,'medical_report' : m})
     else:
         return (HttpResponse("no query"))
@@ -64,7 +65,7 @@ def search_profile(request):
     else:
        return HttpResponse("you don't have access to this form" )
 
-       
+
 @login_required(login_url='/login')
 def edit_profiles(request):
     if StaffProfile.objects.filter(user=request.user).exists():
