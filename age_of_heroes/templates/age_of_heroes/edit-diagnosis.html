@@ -1,3 +1,4 @@
+{% load static %}
 <html>
    <head>
       <title>Team 10</title>
@@ -35,27 +36,44 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <form class="contact-form">
+                        <form class="contact-form" action="{% url 'edit-diagnosis' %}" method="POST" id="edit-diagnosis" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            Name:
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Name">
+                                <input type="text" name="patient_name" class="form-control" placeholder="Your Name" value="{{ patient_details.patient_full_name }}" >
                             </div>
+                            Blood sugar level:
                             <div class="form-group">
-                                <textarea class="form-control" rows="10" placeholder="Diagnosis"></textarea>
+                                <input type="text" name="sugar_level" class="form-control" placeholder="blood_sugar_level" value={{medical_report.blood_sugar_level}}>
+                            </div>
+                            Blood pressure:
+                            <div class="form-group">
+                                <input type="text" name="blood_pressure" class="form-control" placeholder="blood presssure" value="{{medical_report.blood_pressure}}">
+                            </div> 
+                            Weight:
+                            <div class="form-group">
+                                <input type="text" name="weight" class="form-control" placeholder="weight" value="{{medical_report.weight}}">
+                            </div>
+                            Height:
+                            <div class="form-group">
+                                <input type="text" name="height" class="form-control" placeholder="height" value="{{medical_report.height}}">
+                            </div>
+                            Current medical conditions:
+                            <div class="form-group">
+                                <input type="text" name="current_conditions" class="form-control" rows="10" placeholder="Diagnosis" value="{{medical_report.current_medical_condition}}">
                             </div>
                             <div class="row">
                             <div class="col-md-6 contact info">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                            <div class="col-md-6 contact info">
-                                <button type="submit" class="btn btn-primary">Cancel</button>
+                                <button type="submit" form="edit-diagnosis"  class="btn btn-primary">Save</button>
                             </div>
                             </div>
                         
                     </div>
                     <div class="col-md-6 contact info">
                         <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
+                        New medical conditions:
                         <div class="form-group">
-                            <textarea class="form-control" rows="3" placeholder="New medical conditions"></textarea>
+                            <input form="edit-diagnosis" rows="3" placeholder="New medical conditions" name="new_conditions">
                         </div>
                         </form>
                     </div>

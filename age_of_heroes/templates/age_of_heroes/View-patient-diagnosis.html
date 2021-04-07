@@ -19,24 +19,31 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="Doctor-Profile.html">Profile</a>
+                        <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="View-patient.html">View Patient list</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="View-patient-diagnosis.html">Edit Patient Diagnosis</a>
+                        <a class="nav-link" href="/view-patient-diagnosis">Edit Patient Diagnosis</a>
                     </li>
                     <li>
                         <a class="nav-link" href="Doctor-Appiontment.html">Today's Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Account.html">Logout</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
             </nav>
         </section>
+
+        <div id="ErrorMessage">
+            {% for message in messages %}
+            <h3>{{message}}</h3>
+            {% endfor %}
+         </div>
+
         <!--Get in touch-->
                 <section id="contact">
             <div class="container">
@@ -46,7 +53,7 @@
                 <div class="form-group">
                 </div>
                 <div class="form-group">
-                    <form method="GET">
+                    <form action="{% url 'edit-diagnosis' %}" method="GET">
                     <input type="text" name="query" class="form-control" placeholder="Search for a profile by entering dedicated ID">
                 </div>
                     <button type="submit" class="btn btn-primary" >Search </button>
