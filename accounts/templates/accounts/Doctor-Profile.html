@@ -1,3 +1,4 @@
+{% load static %}
 <html>
    <head>
       <title>Team 10</title>
@@ -19,13 +20,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="AS-Profile.html">Profile</a>
+                        <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#">View Patient list</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Edit Patient Diagnosis</a>
+                        <a class="nav-link" href="/view-patient-diagnosis">Edit Patient Diagnosis</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -46,7 +47,6 @@
                 <form class="contact-form">
                 <div class="row">
                     <div class="col-md-6">
-                        
                         <div class="form-group">
                            <input type="text" class="form-control" placeholder="Name" value="{{doctor_details.doctor_full_name}}" disabled>
                         </div>
