@@ -13,7 +13,7 @@ from django.http import HttpResponse
 def patient_book_appointment(request):
     patient = PatientProfile.objects.get(user=request.user)
     if Appointment.objects.filter(patient=patient, status='pending').exists():
-        messages.info(request, 'You already have an appointment pending. You can change the date if you want to.')
+        messages.info(request, 'You already have an appointment pending. If you want to change the appointment, cancel the older appointment first and book a new one.')
         return redirect('/appointment_booked_patient')
     
     if request.method == 'POST':
@@ -139,7 +139,7 @@ def view_appointments_doctor(request):
     else:
         return HttpResponse("You do not have access to view this page")
 
-          
+@login_required(login_url='/login')      
 def appointment_done_doctor(request):
     if DoctorProfile.objects.filter(user=request.user).exists():
         if request.method == 'POST':
@@ -156,6 +156,8 @@ def appointment_done_doctor(request):
     else:
         return HttpResponse("You do not have access to perform this action!")
     
+    
+@login_required(login_url='/login')
 def appointment_pending_doctor(request):
     if DoctorProfile.objects.filter(user=request.user).exists():
         if request.method == 'POST':
@@ -181,3 +183,101 @@ def appointment_pending_doctor(request):
         
     else:
         return HttpResponse("You do not have access to perform this action!")
+    
+    
+@login_required(login_url='/login')
+def staff_book_appointment(request):
+    if request.method == 'POST':
+        patient_id = request.POST['patient_id']
+        patient_email = request.POST['email']
+        patient_phone = request.POST['phone']
+        if patient_id != '':
+            patient = PatientProfile.objects.filter(patient_id=patient_id)[0]
+        elif patient_email != '':
+            patient = PatientProfile.objects.filter(email=patient_email)[0]
+        elif patient_phone != '':
+            patient = PatientProfile.objects.filter(phone_number=patient_phone)[0]
+        else:
+            messages.info(request, 'You have to enter either Patient ID or their Email ID or their Phone Number for booking the appointment.')
+            return redirect('/staff_book_appointment')
+        
+        
+        if Appointment.objects.filter(patient=patient, status='pending').exists():
+            messages.info(request, 'You already have an appointment pending. If you want to change the appointment, cancel the older appointment first and book a new one.')
+            return redirect('/staff_book_appointment')
+        
+        doctor_id = request.POST['doctor_id']
+        date = request.POST['date']
+        
+        if doctor_id == '':
+            doctors = DoctorProfile.objects.all()
+            for doctor in doctors:
+                appointments = Appointment.objects.filter(doctor=doctor, date=date).order_by('expected_time')
+                if len(appointments) < 35:
+                    if len(appointments) == 0:
+                        expected_time = datetime.time(10,0,0)
+                    else:
+                        ###### For the new appointment's expected time, the previous appointment's expected time is got and 15 minutes is added ######
+                        previous_time = appointments.last().expected_time
+                        expected_time = (datetime.datetime.combine(datetime.date.today(), previous_time) + datetime.timedelta(minutes=15)).time()
+                        
+                    date_object = datetime.datetime.now()
+                    token_id = str(doctor.user.pk) + str(date_object.day) + str(date_object.strftime("%m")) + str(date_object.year) + str(len(appointments) + 1)
+                    token_number = str(len(appointments) + 1)
+                    
+                    new_appointment = Appointment(doctor=doctor, date=date, patient=patient, token_number=token_number, token_id=token_id, expected_time=expected_time, status='pending')
+                    new_appointment.save()
+                    mail_subject = 'Appointment Booked in HMS'
+                    message = render_to_string('age_of_heroes/appointment_registered_email.html', {
+                    'user' : request.user,
+                    'appointment' : new_appointment,
+                    })
+                    email = EmailMessage(
+                            mail_subject, message, to=[request.user.email]
+                            )
+                    email.content_subtype = 'html'
+                    email.send()
+                    break
+            else:
+                messages.info(request, 'No doctor is free today, contact the receptionists for more details.')
+                return redirect('staff_book_appointment')
+            
+            messages.info(request, 'Appointment Booked Successfully!')
+            return redirect('/staff_book_appointment')     
+           
+        else:
+            doctor = DoctorProfile.objects.get(doctor_id=doctor_id)
+            appointments = Appointment.objects.filter(doctor=doctor, date=date)
+        
+            if len(appointments)>=35:
+                messages.info(request, 'The slots for your requested Doctor is full, choose another doctor or leave the field blank, so that we will assign you an available doctor.')
+                return redirect('staff_book_appointment')
+            else:
+                if len(appointments) == 0:
+                        expected_time = datetime.time(10,0,0)
+                else:
+                    ###### For the new appointment's expected time, the previous appointment's expected time is got and 15 minutes is added ######
+                    previous_time = appointments.last().expected_time
+                    expected_time = (datetime.datetime.combine(datetime.date.today(), previous_time) + datetime.timedelta(minutes=15)).time()
+                    
+                date_object = datetime.datetime.now()
+                token_id = str(doctor.user.pk) + str(date_object.day) + str(date_object.strftime("%m")) + str(date_object.year) + str(len(appointments) + 1)
+                token_number = str(len(appointments) + 1)
+                
+                new_appointment = Appointment(doctor=doctor, date=date, patient=patient, token_number=token_number, token_id=token_id, expected_time=expected_time, status='pending')
+                new_appointment.save()
+                mail_subject = 'Appointment Booked in HMS'
+                message = render_to_string('age_of_heroes/appointment_registered_email.html', {
+                'user' : request.user,
+                'appointment' : new_appointment,
+                })
+                email = EmailMessage(
+                        mail_subject, message, to=[request.user.email]
+                        )
+                email.content_subtype = 'html'
+                email.send()
+                
+            messages.info(request, 'Appointment Booked Successfully!')
+            return redirect('/staff_book_appointment')
+    else:
+        return render(request, 'age_of_heroes\AS-Appointment.html')

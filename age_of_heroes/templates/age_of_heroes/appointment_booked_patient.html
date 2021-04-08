@@ -105,8 +105,7 @@
             <form action="/cancel_appointment_patient" method="POST" id="cancel_appointment">
                 {% csrf_token %}
                 <input type="text" name="appointment_id" value="{{appointment.pk}}" class="form-control" hidden>
-                <!-- <button type="submit" form="cancel_appointment" >Cancel Appointment</button> -->
-                <input type="submit" value="Cancel Appointment" form="cancel_appointment" class="btn btn-primary">
+                <button type="submit" form="cancel_appointment" class="btn btn-primary" onclick="myFunction()">Cancel Appointment</button>
             </form>
             </div>
 
@@ -157,7 +156,7 @@
         </div>
         <script>
             function myFunction() {
-              confirm("Are you sure you want to save?");
+              confirm("Are you sure you want to cancel?");
             }
             </script>
    </body>
