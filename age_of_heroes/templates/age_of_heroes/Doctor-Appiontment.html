@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="Doctor-Profile.html">Profile</a>
+                        <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="Patient-list.html">View Patient list</a>
@@ -44,29 +44,50 @@
                     <div class="col-md-6"><h2>Today's Appiontments</h2></div>
                     <div class="col-md-6"><p style="text-align:right;">Hi there,user!!</p></div>
                 </div>
+                {% if appointments is not None %}
+                {% for appointment in appointments %}
                 <div id ="container">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name" disabled>
+                                <label for="name">Patient Name:</label>
+                                <input type="text" name="name" class="form-control" placeholder="Name" value="{{appointment.patient.patient_full_name}}" disabled>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Token number" disabled>
+                                <label for="patient_id">Patient ID:</label>
+                                <input type="text" name="patient_id" class="form-control" value="{{appointment.patient.patient_id}}" placeholder="Patient ID" disabled>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary" >Done</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary" >Pending</button>
-                                </div>
+                            <div class="form-group">
+                                <label for="token_number">Token Number:</label>
+                                <input type="text" name="token_number" class="form-control" value="{{appointment.token_number}}" placeholder="Patient ID" disabled>
                             </div>
+                            
                         </div>
                         <div class="col-md-6">
                             <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form id="appointment_done" action="/appointment_done_doctor" method="POST">
+                                {% csrf_token %}
+                                <input type="text" name="appointment_id" value="{{appointment.pk}}" hidden readonly>
+                                <button type="submit" form="appointment_done" class="btn btn-primary">Done</button>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form id="appointment_pending" action="/appointment_pending_doctor" method="POST">
+                                {% csrf_token %}
+                                <input type="text" name="appointment_id" value="{{appointment.pk}}" hidden readonly>
+                                <button type="submit" form="appointment_pending" class="btn btn-primary">Pending for today</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+                {% endfor%}
+                {% else %}
+                <h2>No appointments remaining today!</h2>
+                {% endif %}
             </div>
         </section>
         <!--footer-->

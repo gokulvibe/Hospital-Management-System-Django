@@ -96,13 +96,17 @@ def patient_book_appointment(request):
     
 @login_required(login_url='/login')
 def appointment_booked_patient(request):
-    patient = PatientProfile.objects.filter(user=request.user)[0]
+    if PatientProfile.objects.filter(user=request.user).exists():
+        patient = PatientProfile.objects.filter(user=request.user)[0]
+        
+        try:
+            appointment = Appointment.objects.filter(patient=patient, status='pending')[0]
+        except:
+            appointment = None
+        return render(request, 'age_of_heroes\\appointment_booked_patient.html', context={'appointment' : appointment})
     
-    try:
-        appointment = Appointment.objects.filter(patient=patient, status='pending')[0]
-    except:
-        appointment = None
-    return render(request, 'age_of_heroes\\appointment_booked_patient.html', context={'appointment' : appointment})
+    else:
+        return HttpResponse("You do not have access to this page!")
 
 @login_required(login_url='/login')
 def cancel_appointment_patient(request):
@@ -116,3 +120,39 @@ def cancel_appointment_patient(request):
     
     else:
         return HttpResponse("Dude, what are you tring to do?")
+    
+@login_required(login_url='/login')  
+def view_appointments_doctor(request):
+    if DoctorProfile.objects.filter(user=request.user).exists():
+        doctor = DoctorProfile.objects.filter(user=request.user)[0]
+        
+        appointments = Appointment.objects.filter(doctor=doctor, status='pending', date=datetime.datetime.today())
+        
+        
+        if len(appointments) == 0:
+            appointments = None
+        else:
+            pass
+            
+        return render(request, 'age_of_heroes\\Doctor-Appiontment.html', context={'appointments' : appointments})
+    
+    else:
+        return HttpResponse("You do not have access to view this page")
+
+          
+def appointment_done_doctor(request):
+    if DoctorProfile.objects.filter(user=request.user).exists():
+        if request.method == 'POST':
+            appointment_id = request.POST['appointment_id']
+            appointment = Appointment.objects.get(pk = appointment_id)
+            appointment.status = 'done'
+            appointment.save()
+            
+            return redirect('/view_appointments_doctor')
+        
+        else:
+            return HttpResponse("Dude, what are you trying now?")
+        
+    else:
+        return HttpResponse("You do not have access to perform this action!")
+    
