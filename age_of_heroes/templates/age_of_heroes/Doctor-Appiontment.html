@@ -79,7 +79,7 @@
                             <form id="appointment_pending" action="/appointment_pending_doctor" method="POST">
                                 {% csrf_token %}
                                 <input type="text" name="appointment_id" value="{{appointment.pk}}" hidden readonly>
-                                <button type="submit" form="appointment_pending" class="btn btn-primary">Pending for today</button>
+                                <button type="submit" form="appointment_pending" class="btn btn-primary">Didn't visit today (Delete)</button>
                             </form>
                         </div>
                     </div>

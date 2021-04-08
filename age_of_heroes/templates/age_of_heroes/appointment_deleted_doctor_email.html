@@ -1,0 +1,12 @@
+{% autoescape off %}
+Hi {{ user.first_name }}, your appointment for today to visit HMS has been cancelled by the following doctor:<br>
+
+Doctor ID: {{doctor.doctor_id}}<br>
+Doctor Name: {{doctor.doctor_full_name}}<br>
+
+It was cancelled because you did not visit the doctor today.<br>
+
+You can use the web app to book a new appointment some other day.
+
+Please be present at the hospital before the expected time. For further information contact the receptionists.
+{% endautoescape %}

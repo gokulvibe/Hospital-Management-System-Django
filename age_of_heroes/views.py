@@ -156,3 +156,28 @@ def appointment_done_doctor(request):
     else:
         return HttpResponse("You do not have access to perform this action!")
     
+def appointment_pending_doctor(request):
+    if DoctorProfile.objects.filter(user=request.user).exists():
+        if request.method == 'POST':
+            appointment_id = request.POST['appointment_id']
+            appointment = Appointment.objects.get(pk = appointment_id)
+            doctor = appointment.doctor
+            appointment.delete()
+            mail_subject = 'Appointment Booked in HMS'
+            message = render_to_string('age_of_heroes/appointment_deleted_doctor_email.html', {
+            'user' : request.user,
+            'doctor' : doctor,
+            })
+            email = EmailMessage(
+                    mail_subject, message, to=[request.user.email]
+                    )
+            email.content_subtype = 'html'
+            email.send()
+            
+            return redirect('/view_appointments_doctor')
+        
+        else:
+            return HttpResponse("Dude, what are you trying now?")
+        
+    else:
+        return HttpResponse("You do not have access to perform this action!")
