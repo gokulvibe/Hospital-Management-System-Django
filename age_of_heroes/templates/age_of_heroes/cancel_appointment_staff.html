@@ -1,0 +1,157 @@
+<html>
+   <head>
+      <title>Team 10</title>
+      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" ></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script> 
+    </head>
+   <body>
+        <!--Navigation Bar-->
+        <section id="navigation-bar">
+            <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#"><img src="logo.png"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="AS-Profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="patient-reg.html">Patient-registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Doc-reg.html">Doctor-registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="AS-reg.html">AS-registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="AS-Appointment.html">Book Appiontment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Edit.html">Edit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Account.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            </nav>
+        </section>
+        <!--Get in touch-->
+        <section id="contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6"><h2>Book Appointments</h2></div>
+                    <div class="col-md-6"><p style="text-align:right;">Hi there,user!!</p></div></div>
+                    <div id="ErrorMessage">
+                        {% for message in messages %}
+                        <h3>{{message}}</h3>
+                        {% endfor %}
+                     </div>
+                
+                <form action="/cancel_appointment_staff" method="GET" id="search_for_cancel">
+                    <label for="search">Enter a Patient ID to search:</label>
+                    <input type="text" name="search" class="form-control" placeholder="Patient ID">
+                    <input type="submit" form="search_for_cancel" value="Search">
+                </form>
+
+                {% if appointments is not None %}
+                {% for appointment in appointments %}
+                <form class="contact-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        
+                             <div class="form-group">
+                                <label for="patient_id">Patient ID:</label>
+                                <input type="text" name="patient_id" value="{{appointment.patient.patient_id}}" class="form-control" readonly>
+                             </div>
+                             <div class="form-group">
+                                <label for="patient_id">Patient Name:</label>
+                                <input type="text" name="patient_id" value="{{appointment.patient.patient_patient_full_name}}" class="form-control" readonly>
+                             </div>
+                        
+                    </div>
+                    <div class="col-md-6 contact info">
+                        {% if staff_details.profile_picture %}
+                            <div classs="form-group">
+                            <img src="{{appointment.patient.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
+                            </div>
+                            {% endif %}
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" value="{{appointment.patient.email}}" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" class="form-control" value="{{appointment.patient.phone_number}}" name="phone" readonly>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="mb-5 contact info">
+                <form method="POST" action="\cancel_appointment_staff">
+                    {% csrf_token %}
+                    <input type="text" name="appointment_id" value="{{appointment.pk}}" hidden>
+                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Delete appointment</button>
+                </form>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3>No appointment exists for the entered user</h3>
+            {% endif %}
+                
+            </div>
+        </section>
+        <!--footer-->
+        <div class="footer">
+        <div class="container">   
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download our app</h3>
+                    <p>Download App for Android and IOS.</p>
+                    <div class="app-logo">
+                        <img src="images/play-store.png">
+                        <img src="images/ios-store.png">
+                    </div>
+                </div>
+                <div class="footer-col-2">
+                    <img src="logo.png">
+                    <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
+                </div> 
+                <div class="footer-col-3">
+                    <h3>Useful links</h3>
+                    <ul>
+                        <li>Coupons</li>
+                        <li>Blog Post</li>
+                        <li>Return Policy</li>
+                        <li>Joint Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow us</h3>
+                    <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="copyright">Copyright 2020 - The Gentleman</p>
+            </hr>
+        </div>
+        </div>
+        <script>
+            function myFunction() {
+              confirm("Are you sure you want to save?");
+            }
+            </script>
+   </body>
+</html>

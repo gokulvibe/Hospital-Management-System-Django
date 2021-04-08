@@ -281,3 +281,40 @@ def staff_book_appointment(request):
             return redirect('/staff_book_appointment')
     else:
         return render(request, 'age_of_heroes\AS-Appointment.html')
+    
+    
+def cancel_appointment_staff(request):
+    if request.method == 'POST':
+        appointment_id = request.POST['appointment_id']
+        appointment = Appointment.objects.get(pk=appointment_id)
+        doctor = appointment.doctor
+        appointment.delete()
+        staff = StaffProfile.objects.get(user=request.user)
+        mail_subject = 'Appointment Booked in HMS'
+        message = render_to_string('age_of_heroes/appointment_deleted_doctor_email.html', {
+        'user' : request.user,
+        'doctor' : doctor,
+        })
+        email = EmailMessage(
+                mail_subject, message, to=[request.user.email]
+                )
+        email.content_subtype = 'html'
+        email.send()
+        
+        return redirect('/cancel_appointment_staff')
+    
+    try:
+        search = request.GET['search']
+    except:
+        search = ''
+
+    patient_profiles = PatientProfile.objects.filter(patient_id__contains = search)
+    appointments = Appointment.objects.none()
+    for patient in patient_profiles:
+        if len(Appointment.objects.filter(patient=patient,status='pending')) != 0:
+            appointments = appointments | Appointment.objects.filter(patient=patient, status='pending')
+    
+    if len(appointments) == 0:
+        appointments = None
+            
+    return render(request, 'age_of_heroes\cancel_appointment_staff.html', context={'appointments' : appointments})
