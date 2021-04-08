@@ -13,109 +13,96 @@
         <!--Navigation Bar-->
         <section id="navigation-bar">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#"><img src="images/logo.png"></a>
+            <a class="navbar-brand" href="#"><img src="logo.png"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="AS-Profile.html">Profile</a>
+                        <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="patient-reg.html">Patient-registration</a>
+                        <a class="nav-link" href="#">Pay Bill</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Doc-reg.html">Doctor-registration</a>
+                        <a class="nav-link" href="/patient-diagnosis">View Diagnosis</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="AS-reg.html">AS-registration</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="AS-Appointment.html">Book Appiontment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Edit.html">Edit</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Account.html">Logout</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
             </nav>
         </section>
         <!--Get in touch-->
-            <section id="contact">
+        <section id="contact">
             <div class="container">
-                {%for message in messages %}
-                <h3>{{message}}</h3>
-                {% endfor %}
                 <div class="row">
                     <div class="col-md-6">
-                        <form class="contact-form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Name">
+                        <h2>Patient Registration</h2>
+                    </div>
+                </div>
+                <form class="patient-register-form" action = "edit-profiles" method="POST" id="patient-edit-profile" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                            {% csrf_token %}
+                             <div class="form-group">
+                                <input type="text" class="form-control" name="name" placeholder="First Name" value="{{patient_details.patient_full_name}}">
+                             </div>
+                             <div class="form-group">
+                                <label for="date_of_birth">Date of Birth</label>
+                                <input  name="date_of_birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')" value="{{patient_details.date_of_birth}}">
                             </div>
                             <div class="form-group">
-                                <input placeholder = "Date of Birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <input type="text" class="form-control" name="blood_group" placeholder="Blood-Group" value="{{patient_details.blood_group}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Patient ID">
+                                <input type="number" class="form-control" name="age" placeholder="Age" value="{{patient_details.age}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Blood-Group">
+                                <input type="text" class="form-control" name="gender" placeholder="Gender" value="{{patient_details.gender}}">
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Age">
+                                <input type="email" class="form-control" name="email" placeholder="Email ID" value="{{user.email}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Doctor name">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Contact number">
+                                <input type="text" class="form-control" name="contact_number" placeholder="Contact number" value="{{patient_details.phone_number}}">
                             </div>  
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Previous medical conditions"></textarea>
-                            </div>
-                            <div class="row">
-                            <div class="col-md-6 contact info">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                            <div class="col-md-6 contact info">
-                                <button type="submit" class="btn btn-primary">Delete</button>
-                            </div>
-                            </div>
                         
                     </div>
                     <div class="col-md-6 contact info">
-                        
                             <div class="form-group">
-                                <label for="img">Select image:</label>
-                                <input type="file" class="form-control" id="img" name="img" accept="image/*">
+                                <label for="img">Select Profile Photo:</label>
+                                {% if patient_details.profile_picture %}
+                                <img src="{{patient_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
+                                {% endif %}
+                                <input type="file" id="img" name="image" accept="image/*">
                             </div> 
                             <div class="form-group">
-                                <input placeholder = "Date of First Admission" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <label for="accepted_date">Accepted Date</label>
+                                <input name="accepted_date" class = "form-control" type = "text" onfocus = "(this.type = 'date')" value="{{patient_details.accepted_date}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Nature of visit: In-patient or Out-patient">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Diagnosis"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email ID">
+                                <input type="text" class="form-control" name="diagnosis" placeholder="Diagnosis" value="{{patient_details.diagnosis}}">
                             </div>
                             
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" placeholder="Address"></textarea>
+                                <textarea class="form-control" rows="3" name="address" placeholder="Address">{{patient_details.address}}</textarea>
                             </div>
                         
-                        </form>
+                            <div class="col-md-6 contact info">
+                                
+                                <button type="submit" form="patient-edit-profile" class="btn btn-primary">Edit Patient Profile</button>
+
+                            </div>
+                        
                     </div>
                 </div>
-            </div></div>
+            </form>
+            </div>
         </section>
-        <!--footer-->
+        <footer>
         <div class="footer">
         <div class="container">   
             <div class="row">
@@ -123,8 +110,8 @@
                     <h3>Download our app</h3>
                     <p>Download App for Android and IOS.</p>
                     <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/ios-store.png">
+                        <img src="play-store.png">
+                        <img src="ios-store.png">
                     </div>
                 </div>
                 <div class="footer-col-2">
@@ -154,13 +141,6 @@
             <p class="copyright">Copyright 2020 - The Gentleman</p>
             </hr>
         </div>
-        </div>
-        <script>
-            function myFunction() {
-              var x = document.getElementById("hide");
-              x.style.display="block";
-            }
-            </script>
+        </div> 
    </body>
 </html>
-

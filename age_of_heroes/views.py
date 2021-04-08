@@ -66,27 +66,68 @@ def search_profile(request):
        return HttpResponse("you don't have access to this form" )
 
 
+
 @login_required(login_url='/login')
 def edit_profiles(request):
+    n=0
     if StaffProfile.objects.filter(user=request.user).exists():
         if request.method=='GET':
-            q=request.GET.get('query')
+            q=request.GET.get('search_term')
             if User.objects.filter(username__icontains=q).exists():
-                u=user.objects.get(username__icontains = q)
+                u=User.objects.get(username__icontains = q)
                 if PatientProfile.objects.filter(user=u).exists():
                     p=PatientProfile.objects.get(user=u)
+                    n=1
+                    messages.info(request,"you searched for "+p.patient_full_name)
+                    return render(request,'age_of_heroes/edit-patient-profile.html',context={'patient_details' : p ,'user' : u})
                 elif DoctorProfile.objects.filter(user=u).exists():
                     p=DoctorProfile.objects.get(user=u)
+                    '''messages.info(request,"you searched for "+p.doctor_full_name)
+                    return render(request,'age_of_heroes/edit-patient-profile.html')'''
                 else:
                     p=StaffProfile.objects.get(user=u)
-                return render(request, 'age_of_heroes/edit-profiles.html',context={'profile' : p ,'query' : q})
+                return render(request, 'age_of_heroes/edit.html',context={'profile' : p , })
             else:
                 messages.info(request, "the account you search for doesn't exist")
-                return redirect("/edit-profiles")
+                return redirect("/search-profile")
         elif request.method=='POST':
-            pass
+            email = request.POST['email']
+            u=User.objects.get(email=email)
+            if PatientProfile.objects.filter(user=u).exists():    
+                full_name = request.POST['name']
+                date_of_birth = request.POST['date_of_birth'] if request.POST['date_of_birth'] != '' else None
+                blood_group = request.POST['blood_group']
+                age = request.POST['age'] if request.POST['age'] != '' else None
+                diagnosis = request.POST['diagnosis']
+                contact_number = request.POST['contact_number']
+                profile_pic = request.FILES.get('image')
+                accepted_date = request.POST['accepted_date'] if request.POST['accepted_date'] != '' else None
+                address = request.POST['address']
+                gender = request.POST['gender']
+                
+                p=PatientProfile.objects.get(patient_full_name__icontains=full_name)
+
+                u.email=email
+                p.patient_full_name = full_name,
+                p.profile_picture = profile_pic,
+                p.accepted_date = accepted_date,
+                p.diagnosis = diagnosis,
+                p.date_of_birth = date_of_birth,
+                p.gender = gender,
+                p.age = age,
+                p.blood_group = blood_group,
+                p.address = address,
+                p.phone_number = contact_number
+                '''u.save()'''
+                p.save()
+
+                messages.info(request, "the profile is updated sucessfully")
+                return render(request, 'age_of_heroes/search-profile.html')
+            else:
+                HttpResponse("no mf")
         else:
             return render(request,"age_of_heroes/Edit.html")
     else:
-        HttpResponse("you are not allowed to access the page")
+        return HttpResponse("you are not allowed to access the page")
+    
 
