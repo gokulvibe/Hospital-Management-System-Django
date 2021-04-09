@@ -14,8 +14,7 @@ class Appointment(models.Model):
     status = models.CharField(max_length=20)
     
 class MedicalReport(models.Model):
-    patient = models.ForeignKey(PatientProfile, related_name='medical_report_patient', on_delete=models.CASCADE)
-
+    patient = models.ForeignKey(User, related_name='medical_report_patient', on_delete=models.CASCADE)
     blood_sugar_level = models.FloatField()
     blood_pressure = models.FloatField()
     body_temperature = models.FloatField()
