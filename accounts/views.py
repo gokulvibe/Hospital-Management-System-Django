@@ -152,7 +152,7 @@ def register_staff(request):
             email.send()
             
             messages.info(request, "New Staff Profile has been created successfully. Activation Email Has been sent.")
-            return redirect('/')
+            return redirect('/register_staff')
             
         else:
             return HttpResponse("You do not have access to this submit this form")
@@ -232,7 +232,7 @@ def register_patient(request):
             email.send()
             
             messages.info(request, "New Patient Profile has been created successfully. Activation Email Has been sent.")
-            return redirect('/')
+            return redirect('/register_staff')
             
         else:
             return HttpResponse("You do not have access to this submit this form")
@@ -315,7 +315,7 @@ def register_doctor(request):
             email.send()
             
             messages.info(request, "New Doctor Profile has been created successfully. Activation Email Has been sent.")
-            return redirect('/')
+            return redirect('/register_staff')
             
         else:
             return HttpResponse("You do not have access to this submit this form")

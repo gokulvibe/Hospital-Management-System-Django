@@ -11,6 +11,23 @@ from django.contrib.auth.models import Group
 # Create your views here.
 
 @login_required(login_url='/login')
+def home(request):
+    if request.user.is_authenticated:
+        if StaffProfile.objects.filter(user=request.user).exists():
+            return render(request, 'age_of_heroes\staff_home.html')
+               
+        elif DoctorProfile.objects.filter(user=request.user).exists():
+            return render(request, 'age_of_heroes\doctor_home.html')
+         
+        elif PatientProfile.objects.filter(user=request.user).exists():
+            return render(request, 'age_of_heroes\patient_home.html')
+
+
+        else:
+            return HttpResponse("Oh Shit bruh, something's wrong!")
+
+
+@login_required(login_url='/login')
 def patient_book_appointment(request):
     patient = PatientProfile.objects.get(user=request.user)
     if Appointment.objects.filter(patient=patient, status='pending').exists():

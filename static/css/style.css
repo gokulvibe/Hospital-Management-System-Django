@@ -50,6 +50,7 @@
 
 #slider {
     width: 100%;
+    
 }
 
 .carousel-caption {
@@ -62,6 +63,7 @@
     color: #fff;
     font-size: 90px;
 }
+
 
 
 /*About*/
@@ -128,7 +130,7 @@
 }
 
 #specialities {
-    background-image: url("images/clock2.jpg");
+    background-image: url("images/HMS1.jpg");
 }
 
 
