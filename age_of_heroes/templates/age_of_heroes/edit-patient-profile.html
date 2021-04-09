@@ -1,9 +1,8 @@
 {% load static %}
-<!DOCTYPE html>
 <html>
    <head>
-      <title>Team 10 - HMS</title>
-      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <title>Team 10</title>
+      <link rel="stylesheet" href="style.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
@@ -14,31 +13,20 @@
         <!--Navigation Bar-->
         <section id="navigation-bar">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#"><img src="images/Logo.png"></a>
+            <a class="navbar-brand" href="#"><img src="logo.png"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto mt-auto">
-                    <li class="nav-item active">
-                        <h5 class="nav-link" style="text-align:right;">Hey there {{user.first_name}}</h5>
-                    </li>
-                </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/register-patient/">Patient-registration</a>
+                        <a class="nav-link" href="#">Pay Bill</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register-doctor/">Doctor-registration</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register-staff/">AS-registration</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Edit.html">Edit</a>
+                        <a class="nav-link" href="/patient-diagnosis">View Diagnosis</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -48,12 +36,6 @@
             </nav>
         </section>
         <!--Get in touch-->
-        <div id="ErrorMessage">
-            {% for message in messages %}
-            <h3>{{message}}</h3>
-            {% endfor %}
-         </div>
-
         <section id="contact">
             <div class="container">
                 <div class="row">
@@ -61,65 +43,57 @@
                         <h2>Patient Registration</h2>
                     </div>
                 </div>
-                <form class="patient-register-form" action = "/register-patient/" method="post" id="patient-register-form" enctype="multipart/form-data">
+                <form class="patient-register-form" action = "edit-profiles" method="POST" id="patient-edit-profile" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
                             {% csrf_token %}
                              <div class="form-group">
-                                <input type="text" class="form-control" name="first_name" placeholder="First Name">
-                             </div>
-                             <div class="form-group">
-                                <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                                <input type="text" class="form-control" name="name" placeholder="First Name" value="{{patient_details.patient_full_name}}">
                              </div>
                              <div class="form-group">
                                 <label for="date_of_birth">Date of Birth</label>
-                                <input  name="date_of_birth" class = "form-control" type="date">
+                                <input  name="date_of_birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')" value="{{patient_details.date_of_birth}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="blood_group" placeholder="Blood-Group">
+                                <input type="text" class="form-control" name="blood_group" placeholder="Blood-Group" value="{{patient_details.blood_group}}">
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" name="age" placeholder="Age">
+                                <input type="number" class="form-control" name="age" placeholder="Age" value="{{patient_details.age}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="gender" placeholder="Gender">
+                                <input type="text" class="form-control" name="gender" placeholder="Gender" value="{{patient_details.gender}}">
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" placeholder="Email ID">
+                                <input type="email" class="form-control" name="email" placeholder="Email ID" value="{{user.email}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="contact_number" placeholder="Contact number">
+                                <input type="text" class="form-control" name="contact_number" placeholder="Contact number" value="{{patient_details.phone_number}}">
                             </div>  
-                            <!-- <div class="row">
-                            
-                            <div class="col-md-6 contact info">
-                                
-                                    <button type="submit" class="btn btn-primary">Delete</button>
-                                
-                            </div>
-                            </div> -->
                         
                     </div>
                     <div class="col-md-6 contact info">
                             <div class="form-group">
                                 <label for="img">Select Profile Photo:</label>
+                                {% if patient_details.profile_picture %}
+                                <img src="{{patient_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
+                                {% endif %}
                                 <input type="file" id="img" name="image" accept="image/*">
                             </div> 
                             <div class="form-group">
                                 <label for="accepted_date">Accepted Date</label>
-                                <input name="accepted_date" class = "form-control" type="date">
+                                <input name="accepted_date" class = "form-control" type = "text" onfocus = "(this.type = 'date')" value="{{patient_details.accepted_date}}">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="diagnosis" placeholder="Diagnosis">
+                                <input type="text" class="form-control" name="diagnosis" placeholder="Diagnosis" value="{{patient_details.diagnosis}}">
                             </div>
                             
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" name="address" placeholder="Address"></textarea>
+                                <textarea class="form-control" rows="3" name="address" placeholder="Address">{{patient_details.address}}</textarea>
                             </div>
                         
                             <div class="col-md-6 contact info">
                                 
-                                <button type="submit" form="patient-register-form" class="btn btn-primary">Create New Patient Profile</button>
+                                <button type="submit" form="patient-edit-profile" class="btn btn-primary">Edit Patient Profile</button>
 
                             </div>
                         
@@ -128,7 +102,7 @@
             </form>
             </div>
         </section>
-        <!--footer-->
+        <footer>
         <div class="footer">
         <div class="container">   
             <div class="row">
@@ -136,12 +110,12 @@
                     <h3>Download our app</h3>
                     <p>Download App for Android and IOS.</p>
                     <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/ios-store.png">
+                        <img src="play-store.png">
+                        <img src="ios-store.png">
                     </div>
                 </div>
                 <div class="footer-col-2">
-                    <img src="images/logo.png">
+                    <img src="logo.png">
                     <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
                 </div> 
                 <div class="footer-col-3">
@@ -164,9 +138,9 @@
                 </div>
             </div>
             <hr>
-            <p class="copyright">Copyright 2020 - Team 10</p>
+            <p class="copyright">Copyright 2020 - The Gentleman</p>
             </hr>
         </div>
-        </div>
+        </div> 
    </body>
 </html>

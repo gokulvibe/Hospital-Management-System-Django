@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 from accounts.models import *
 # Create your models here.
 
@@ -14,6 +15,7 @@ class Appointment(models.Model):
     
 class MedicalReport(models.Model):
     patient = models.ForeignKey(PatientProfile, related_name='medical_report_patient', on_delete=models.CASCADE)
+
     blood_sugar_level = models.FloatField()
     blood_pressure = models.FloatField()
     body_temperature = models.FloatField()
@@ -24,5 +26,5 @@ class MedicalReport(models.Model):
     other_diagonosis = models.TextField()
     previous_medical_conditions = models.TextField()
     current_medical_condition = models.TextField()
-    cause = models.CharField(max_length=20)
+    cause = models.CharField(max_length=100)
     height = models.FloatField()
