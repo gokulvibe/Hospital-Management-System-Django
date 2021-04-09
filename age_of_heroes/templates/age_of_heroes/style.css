@@ -1,0 +1,300 @@
+* {
+    margin: 0;
+    padding: 0;
+    /*for complete website*/
+}
+
+
+/*Navigation Bar*/
+
+#navigation-bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar-brand img {
+    height: 40px;
+    padding-left: 30px;
+}
+
+.navbar-nav li {
+    padding: 0 10px;
+}
+
+.navbar-nav li a {
+    float: right;
+    text-align: left;
+}
+
+.navbar-nav li a:hover {
+    color: #007bff!important;
+}
+
+.navbar {
+    background: #fff;
+}
+
+.navbar-toggler {
+    border: none!important;
+}
+
+.nav-link {
+    color: #555!important;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+
+/*slider*/
+
+#slider {
+    width: 100%;
+}
+
+.carousel-caption {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: initial!important;
+}
+
+.carousel-caption h5 {
+    color: #fff;
+    font-size: 90px;
+}
+
+
+/*About*/
+
+#about-us {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: #555;
+}
+
+.about {
+    padding-top: 20px;
+}
+
+.progress p {
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.progress-bar {
+    border-radius: 16px;
+}
+
+.progress {
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+#specialities h3 {
+    padding-top: 20px;
+    text-align: center;
+    color: #efefef!important;
+    padding-bottom: 5px;
+}
+
+#specialities h3::after {
+    content: '';
+    background: white;
+    display: block;
+    height: 3px;
+    width: 170px;
+    margin: 20px auto 5px;
+}
+
+.specialities {
+    margin-top: 40px;
+}
+
+.icon {
+    font-size: 40px;
+    color: white;
+    margin: 20px auto;
+    padding: 20px;
+    height: 80px;
+    width: 80px;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+#specialities p {
+    font-size: 14px;
+    margin-top: 20px;
+    color: white;
+}
+
+#specialities {
+    background-image: url("images/clock2.jpg");
+}
+
+
+/*contact*/
+
+#contact {
+    background: #efefef;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: #777;
+}
+
+.contact-form {
+    padding: 15px;
+}
+
+.form-control {
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+.follow {
+    background: #fff;
+    padding: 10px;
+    margin: 15px;
+}
+
+.follow i {
+    color: blue;
+    padding: 5px;
+}
+
+
+/*account-page*/
+
+#Login {
+    background-image: url("images/clock3.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.login {
+    width: 360px;
+    padding: 10% 0 0;
+    margin: auto;
+}
+
+.form {
+    position: relative;
+    z-index: 1;
+    background: #000;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+}
+
+.form input {
+    outline: none;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.form button {
+    text-transform: uppercase;
+    outline: 0;
+    background: teal;
+    width: 100px;
+    border: none;
+    padding: 15px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.5s;
+    ;
+}
+
+.form button:hover,
+.forrm button:active {
+    background: green;
+    border: none;
+}
+
+.form .message {
+    margin: 15px;
+    color: #fff;
+    font-size: 12px;
+}
+
+.form .message a {
+    color: orange;
+    text-decoration: none;
+}
+
+.register {
+    display: none;
+}
+
+
+/*footer*/
+
+.footer {
+    background: #000;
+    color: #8a8a8a;
+    font-size: 10x;
+    padding: 60px 0 20px;
+}
+
+.footer p {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.footer-col-1,
+footer-col-2,
+footer-col-3,
+footer-col-4 {
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+.footer-col-1 {
+    flex-basis: 30%;
+}
+
+.footer-col-2 {
+    flex: 1;
+    text-align: center;
+}
+
+.footer-col-2 img {
+    width: 180px;
+    margin-bottom: 20px;
+}
+
+.footer-col-3,
+.footer-col-4 {
+    flex-basis: 10%;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.app-logo {
+    margin-top: 20px;
+}
+
+.app-logo img {
+    width: 120px;
+}
+
+.footer hr {
+    border: none;
+    background: #b5b5b5;
+    height: 1px;
+    margin: 20px 0;
+}
+
+.copyright {
+    text-align: center;
+}

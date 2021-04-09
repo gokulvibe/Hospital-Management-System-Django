@@ -293,6 +293,10 @@ def register_doctor(request):
                 address = address,
                 phone_number = contact_number)
             doctor_profile.save()
+
+            doctor_group = Group.objects.get(name='doctor')
+            user.groups.add(doctor_group)
+            user.save()
             
             current_site = get_current_site(request)
             mail_subject = 'Activate your HMS account.'
