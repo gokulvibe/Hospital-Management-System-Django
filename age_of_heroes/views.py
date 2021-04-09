@@ -328,7 +328,7 @@ def view_patient_diagnosis(request):
     if request.user.groups.filter(name="doctor").exists():
         return render(request,'age_of_heroes/view-patient-diagnosis.html')
     else:
-       return HttpResponse("you don't have access to this form" )
+       return HttpResponse("you don't have access to this page" )
 
 
 @login_required(login_url='/login')
@@ -336,9 +336,12 @@ def edit_diagnosis(request):
     if request.method=='GET':
         if request.user.groups.filter(name="doctor").exists():
             query=request.GET['query']
-            if PatientProfile.objects.filter(patient_full_name__icontains=query).exists():
-                p=PatientProfile.objects.get(patient_full_name__icontains = query)
-                m=MedicalReport.objects.get(patient=p.user)
+            if PatientProfile.objects.filter(patient_id=query).exists():
+                p=PatientProfile.objects.filter(patient_id = query)[0]
+                if MedicalReport.objects.filter(patient=p).exists():
+                    m=MedicalReport.objects.filter(patient=p)[0]
+                else:
+                    m = None
                 return render(request, 'age_of_heroes/edit-diagnosis.html',context={'patient_details' : p ,'medical_report' : m})
             else:
                 messages.info(request, "the account you search for doesn't exist")
@@ -346,22 +349,29 @@ def edit_diagnosis(request):
         else:
             HttpResponse("you don't have access to this form")
     elif request.method=='POST':
-        q=request.POST['patient_name']
-        new=request.POST['new_conditions']
-        p=PatientProfile.objects.get(patient_full_name__icontains = q)
-        m=MedicalReport.objects.get(patient=p.user)
-        p.patient_full_name=request.POST['patient_name']
-        m.blood_sugar_level=request.POST['sugar_level']
+        
+        patient_pk = request.POST['patient_pk']
+        patient_object = PatientProfile.objects.get(pk=patient_pk)
+        try:
+            pk = request.POST['pk']
+            m = MedicalReport.objects.get(pk = pk)
+        except:
+            m = MedicalReport()
+            
+        m.blood_sugar_level=request.POST['sugar_level'] if request.POST['sugar_level'] != '' else None
         print(type(m.blood_sugar_level))
-        m.blood_pressure=request.POST['blood_pressure']
-        m.weight=request.POST['weight']
-        m.height=request.POST['height']
+        m.blood_pressure=request.POST['blood_pressure'] if request.POST['blood_pressure'] != '' else None
+        m.weight=request.POST['weight'] if request.POST['weight'] != '' else None
+        m.height=request.POST['height'] if request.POST['height'] != '' else None
         m.current_medical_condition=request.POST['current_conditions']
         print(type(m.current_medical_condition))
-        m.current_medical_condition=m.current_medical_condition+'       '+new
+        new_conditions=request.POST['new_conditions']
+        m.current_medical_condition=m.current_medical_condition+'\n'+new_conditions
+        
+        m.patient = patient_object
         m.save()
         messages.info(request, "the diagnosis is updated sucessfully")
-        return render(request, 'age_of_heroes/edit-diagnosis.html',context={'patient_details' : p ,'medical_report' : m})
+        return render(request, 'age_of_heroes/edit-diagnosis.html',context={'patient_details' : patient_object ,'medical_report' : m})
     else:
         return (HttpResponse("no query"))
 

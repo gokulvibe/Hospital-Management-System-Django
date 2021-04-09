@@ -42,29 +42,55 @@
                     <div class="col-md-6">
                         <form class="contact-form" action="{% url 'edit-diagnosis' %}" method="POST" id="edit-diagnosis" enctype="multipart/form-data">
                             {% csrf_token %}
-                            Name:
+                            Patient Name:
                             <div class="form-group">
-                                <input type="text" name="patient_name" class="form-control" placeholder="Your Name" value="{{ patient_details.patient_full_name }}" >
+                                <input type="text" name="patient_name" class="form-control" placeholder="Your Name" value="{{ patient_details.patient_full_name }}" readonly>
+                            </div>
+                            Patient ID:
+                            <div class="form-group">
+                                <input type="text" name="patient_id" class="form-control" placeholder="ID" value="{{ patient_details.patient_id }}" readonly>
                             </div>
                             Blood sugar level:
                             <div class="form-group">
-                                <input type="text" name="sugar_level" class="form-control" placeholder="blood_sugar_level" value={{medical_report.blood_sugar_level}}>
+                                {% if medical_report.blood_sugar_level is not None %}
+                                <input type="text" name="sugar_level" class="form-control" placeholder="Blood Sugar Level" value="{{medical_report.blood_sugar_level}}">
+                                {% else %}
+                                <input type="text" name="sugar_level" class="form-control" placeholder="Blood Sugar Level">
+                                {% endif %}
                             </div>
                             Blood pressure:
                             <div class="form-group">
+                                {% if medical_report.blood_pressure is not None %}
                                 <input type="text" name="blood_pressure" class="form-control" placeholder="blood presssure" value="{{medical_report.blood_pressure}}">
+                                {% else %}
+                                <input type="text" name="blood_pressure" class="form-control" placeholder="blood presssure">
+                                {% endif %}
                             </div> 
                             Weight:
                             <div class="form-group">
+                                {% if medical_report.weight is not None %}
                                 <input type="text" name="weight" class="form-control" placeholder="weight" value="{{medical_report.weight}}">
+                                {% else %}
+                                <input type="text" name="weight" class="form-control" placeholder="weight">
+                                {% endif %}
                             </div>
                             Height:
                             <div class="form-group">
+                                {% if medical_report.height is not None %}
                                 <input type="text" name="height" class="form-control" placeholder="height" value="{{medical_report.height}}">
+                                {% else %}
+                                <input type="text" name="height" class="form-control" placeholder="height">
+                                {% endif %}
                             </div>
-                            Current medical conditions:
+                            Previous medical conditions:
                             <div class="form-group">
-                                <input type="text" name="current_conditions" class="form-control" rows="10" placeholder="Diagnosis" value="{{medical_report.current_medical_condition}}">
+                                <textarea name="current_conditions" class="form-control" rows="10" placeholder="Diagnosis" readonly>{{medical_report.current_medical_condition}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="pk" class="form-control"  value="{{medical_report.pk}}" hidden>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="patient_pk" class="form-control"  value="{{patient_details.pk}}" hidden>
                             </div>
                             <div class="row">
                             <div class="col-md-6 contact info">
@@ -74,10 +100,14 @@
                         
                     </div>
                     <div class="col-md-6 contact info">
-                        <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
-                        New medical conditions:
+                        {% if patient_details.profile_picture %}
+                        <div classs="form-group">
+                        <img src="{{patient_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
+                        </div>
+                        {% endif %}
+                        Current/New medical conditions:
                         <div class="form-group">
-                            <input form="edit-diagnosis" rows="3" placeholder="New medical conditions" name="new_conditions">
+                            <textarea name="new_conditions" class="form-control" rows="3" placeholder="Enter new medical conditions here"></textarea>
                         </div>
                         </form>
                     </div>
