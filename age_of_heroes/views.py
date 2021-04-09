@@ -400,20 +400,21 @@ def edit_profiles(request):
     if StaffProfile.objects.filter(user=request.user).exists():
         if request.method=='GET':
             q=request.GET.get('search_term')
-            if User.objects.filter(username__icontains=q).exists():
-                u=User.objects.get(username__icontains = q)
-                if PatientProfile.objects.filter(user=u).exists():
-                    p=PatientProfile.objects.get(user=u)
-                    messages.info(request,"you searched for "+p.patient_full_name)
-                    return render(request,'age_of_heroes/edit-patient-profile.html',context={'patient_details' : p ,'user' : u})
-                elif DoctorProfile.objects.filter(user=u).exists():
-                    p=DoctorProfile.objects.get(user=u)
-                    messages.info(request,"you searched for "+p.doctor_full_name)
-                    return render(request,'age_of_heroes/edit-doctor-profile.html',context={'doctor_details' : p,'user' : u})
-                else:
-                    p=StaffProfile.objects.get(user=u)
-                    messages.info(request,"you searched for "+p.staff_full_name)
-                    return render(request,'age_of_heroes/edit-staff-profile.html',context={'staff_details' : p,'user' : u})
+            if PatientProfile.objects.filter(patient_id=q).exists():
+                p = PatientProfile.objects.filter(patient_id=q)[0]
+                u = p.user
+                messages.info(request,"you searched for "+p.patient_full_name)
+                return render(request,'age_of_heroes/edit-patient-profile.html',context={'patient_details' : p ,'user' : u})
+            elif DoctorProfile.objects.filter(doctor_id=q).exists():
+                p = DoctorProfile.objects.filter(doctor_id=q)[0]
+                u = p.user
+                messages.info(request,"you searched for "+p.doctor_full_name)
+                return render(request,'age_of_heroes/edit-doctor-profile.html',context={'doctor_details' : p,'user' : u})
+            elif StaffProfile.objects.filter(staff_id=q).exists():
+                p = StaffProfile.objects.filter(staff_id=q)[0]
+                u = p.user
+                messages.info(request,"you searched for "+p.staff_full_name)
+                return render(request,'age_of_heroes/edit-staff-profile.html',context={'staff_details' : p,'user' : u})
             else:
                 messages.info(request, "the account you search for doesn't exist")
                 return redirect("/search-profile")
@@ -424,11 +425,13 @@ def edit_profiles(request):
                 patient_profile=PatientProfile.objects.get(user=u) 
                 dob=patient_profile.date_of_birth
                 doa=patient_profile.accepted_date
-
-                patient_profile.patient_full_name = request.POST['name']
+                
+                u.first_name = request.POST['first_name']
+                u.last_name = request.POST['last_name']
+                patient_profile.patient_full_name = request.POST['first_name'] + ' ' + request.POST['last_name']
                 patient_profile.date_of_birth = request.POST['date_of_birth'] if request.POST['date_of_birth'] != '' else dob
                 patient_profile.blood_group= request.POST['blood_group']
-                patient_profile.age= request.POST['age'] 
+                patient_profile.age= request.POST['age'] if request.POST['age'] else None
                 patient_profile.diagnosis = request.POST['diagnosis']
                 patient_profile.phone_number= request.POST['contact_number']
                 patient_profile.profile_picture = request.FILES.get('image')
@@ -436,6 +439,7 @@ def edit_profiles(request):
                 patient_profile.address = request.POST['address']
                 patient_profile.gender = request.POST['gender']
                 
+                u.save()
                 patient_profile.save()
 
                 messages.info(request, "the profile is updated sucessfully")
@@ -445,8 +449,11 @@ def edit_profiles(request):
                 d=DoctorProfile.objects.get(user=u)
                 dob=d.date_of_birth
                 doj=d.date_of_joining
-
-                d.doctor_full_name = request.POST['name']
+                
+                u.first_name = request.POST['first_name']
+                u.last_name = request.POST['last_name']
+                d.doctor_full_name = request.POST['first_name'] + ' ' + request.POST['last_name']
+                
                 d.date_of_birth = request.POST['date_of_birth'] if request.POST['date_of_birth'] != '' else dob
                 d.blood_group = request.POST['blood_group']
                 d.age = request.POST['age'] if request.POST['age'] != '' else None
@@ -456,8 +463,10 @@ def edit_profiles(request):
                 d.speciality = request.POST['speciality']
                 d.address = request.POST['address']
                 d.gender = request.POST['gender']
+                
+                u.save()
                 d.save()
-
+                
                 messages.info(request, "the profile is updated sucessfully")
                 return render(request, 'age_of_heroes/search-profile.html')
             
@@ -465,9 +474,11 @@ def edit_profiles(request):
                 s = StaffProfile.objects.get(user=u)
                 dob=s.date_of_birth
                 doj=s.date_joined
-
-                name=request.POST['name']
-                s.staff_full_name=name
+                
+                u.first_name = request.POST['first_name']
+                u.last_name = request.POST['last_name']
+                s.staff_full_name = request.POST['first_name'] + ' ' + request.POST['last_name']
+                
                 s.date_of_birth = request.POST['date_of_birth'] if request.POST['date_of_birth'] != '' else dob
                 s.blood_group = request.POST['blood_group']
                 s.age = request.POST['age'] if request.POST['age'] != '' else None
@@ -477,7 +488,8 @@ def edit_profiles(request):
                 s.qualification = request.POST['qualification']
                 s.address = request.POST['address']
                 s.gender = request.POST['gender']
-
+                
+                u.save()
                 s.save()
 
                 messages.info(request, "the profile is updated sucessfully")
