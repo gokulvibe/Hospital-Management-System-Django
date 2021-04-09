@@ -18,18 +18,20 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto mt-auto">
+                    <li class="nav-item active">
+                        <h5 class="nav-link" style="text-align:right;">Hey there {{user.first_name}}</h5>
+                    </li>
+                </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">View Patient list</a>
+                        <a class="nav-link" href="/view-patient-diagnosis">View/Edit Patient Diagnosis</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/view-patient-diagnosis">Edit Patient Diagnosis</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/view_appointments_doctor">View today's appointments</a>
+                    <li>
+                        <a class="nav-link" href="/view_appointments_doctor">Today's Appointments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>

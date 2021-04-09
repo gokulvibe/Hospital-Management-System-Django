@@ -25,13 +25,13 @@
                         <a class="nav-link" href="/">Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Pay Bill</a>
+                        <a class="nav-link" href="/patient_book_appointment">Book Appointment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/appointment_booked_patient">View Appointment</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/patient-diagnosis">View Diagnosis</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/patient_book_appointment">Book Appointment</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -84,7 +84,7 @@
                </div>
                <div class="col-md-6 contact info">
                    
-                {% if staff_details.profile_picture %}
+                {% if patient_details.profile_picture %}
                 <div classs="form-group">
                 <img src="{{patient_details.profile_picture.url}}" width="200" height="150" alt="You should have seen your picture here">
                 </div>
