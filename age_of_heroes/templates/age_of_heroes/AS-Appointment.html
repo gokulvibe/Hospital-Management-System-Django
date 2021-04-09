@@ -49,39 +49,31 @@
                 <div class="row">
                     <div class="col-md-6"><h2>Book Appointments</h2></div>
                     <div class="col-md-6"><p style="text-align:right;">Hi there,user!!</p></div></div>
+                    <div id="ErrorMessage">
+                        {% for message in messages %}
+                        <h3>{{message}}</h3>
+                        {% endfor %}
+                     </div>
+                
+                <form class="contact-form" action="/staff_book_appointment" method="POST" id="staff_book_appointment">
+                    {% csrf_token %}
                 <div class="row">
-                    
                     <div class="col-md-6">
-                        <form class="contact-form">
+                        
                              <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Name">
+                                <label for="patient_id">Patient ID:</label>
+                                <input type="text" name="patient_id" class="form-control" placeholder="Patient ID">
                              </div>
                              <div class="form-group">
-                                <input placeholder = "Date of Birth" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <label for="date">Date of appointment</label>
+                                <input placeholder = "Date of appointment" name="date" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
                             </div>
                             <div class="form-group">
-                                <input type="number" class="form-control" placeholder="Age">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Doctor">
-                            </div>
-                           <div class="form-group">
-                                <input placeholder = "Date of Appiontment" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Time">
+                                <label for="doctor_id">Doctor ID:</label>
+                                <input type="text" name="doctor_id" class="form-control" placeholder="Doctor ID">
                             </div>
                             <div class="row">
-                            <div class="col-md-6 contact info">
-                                
-                                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Book</button>
-                                
-                            </div>
-                            <div class="col-md-6 contact info">
-                                
-                                    <button type="submit" class="btn btn-primary">Cancel</button>
-                                
-                            </div>
+                            
                             </div>
                         
                     </div>
@@ -91,14 +83,24 @@
                             <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
                         </div> 
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Email ID">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email ID">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Contact number">
-                        </div>  
-                        </form>
+                            <label for="phone">Phone Number</label>
+                            <input type="text" class="form-control" name="phone" placeholder="Contact number">
+                        </div>
+                        
+                        
                     </div>
                 </div>
+                <div class="col-md-6 contact info">
+                                
+                    <button type="submit" class="btn btn-primary" form="staff_book_appointment" onclick="myFunction()">Book</button>
+                
+            </div>
+            </form>
+                
             </div>
         </section>
         <!--footer-->

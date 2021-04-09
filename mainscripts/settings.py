@@ -32,15 +32,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
+    'accounts.apps.AccountsConfig',
+    'age_of_heroes.apps.AgeOfHeroesConfig',
+    
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'accounts.apps.AccountsConfig',
-    'age_of_heroes.apps.AgeOfHeroesConfig'
 ]
 
 MIDDLEWARE = [
@@ -133,6 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '')
 # LOGIN_URL = '/login'
 
 ###### SMTP Email Configurations ######
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'gokulraamofficial@gmail.com'               #Email Here

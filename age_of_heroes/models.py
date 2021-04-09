@@ -1,16 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from accounts.models import *
 # Create your models here.
 
 class Appointment(models.Model):
-    doctor = models.ForeignKey(User, related_name='doctor', on_delete=models.CASCADE)
-    patient = models.ForeignKey(User, related_name='patient', on_delete=models.CASCADE)
-    time_slot = models.DateTimeField()
-    status = models.CharField(max_length=30)
+    doctor = models.ForeignKey(DoctorProfile, related_name='doctor', on_delete=models.CASCADE)
+    patient = models.ForeignKey(PatientProfile, related_name='patient', on_delete=models.CASCADE)
+    date = models.DateField()
+    expected_time = models.TimeField()
+    token_number = models.CharField(max_length=20)
+    token_id = models.CharField(max_length=20)
+    status = models.CharField(max_length=20)
     
 class MedicalReport(models.Model):
-    patient = models.ForeignKey(User, related_name='Patient', on_delete=models.CASCADE)
+    patient = models.ForeignKey(PatientProfile, related_name='medical_report_patient', on_delete=models.CASCADE)
+
     blood_sugar_level = models.FloatField()
     blood_pressure = models.FloatField()
     body_temperature = models.FloatField()

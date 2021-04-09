@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hi {{ user.first_name }}, you have booked an appointment to visit a doctor at HMS by Team 10.<br>
+
+Your appointment details:<br>
+Your ID: {{appointment.patient.patient_id}}<br>
+Your Name: {{appointment.patient.patient_full_name}}<br>
+Doctor ID: {{appointment.doctor.doctor_id}}<br>
+Doctor Name: {{appointment.doctor.doctor_full_name}}<br>
+Token ID: {{appointment.token_id}}<br>
+Token Number: {{appointment.token_number}}<br>
+Date of Visit: {{appointment.date}}<br>
+Expected Time of Visit: {{appointment.expected_time}}<br>
+
+Please be present at the hospital before the expected time. For further information contact the receptionists.
+{% endautoescape %}

@@ -1,4 +1,5 @@
 {% load static %}
+<!DOCTYPE html>
 <html>
    <head>
       <title>Team 10</title>
@@ -39,49 +40,79 @@
         <section id="contact">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6"><h2>Book Appointments</h2></div>
-                    <div class="col-md-6"><p style="text-align:right;">Hi there, {{user.first_name}}</p></div></div>
-
                     <div id="ErrorMessage">
                         {% for message in messages %}
                         <h3>{{message}}</h3>
                         {% endfor %}
                      </div>
+                     <div class="col-md-6"><h2 style="text-align:right;">Your Appointments</h2></div>
+                    <div class="col-md-6"><p style="text-align:right;">Hi there,{{user.first_name}}</p></div>
+                </div>
 
-                <form class="contact-form" action="/patient_book_appointment" method="POST" id="appointmentform">
-                    {% csrf_token %}
+                {% if appointment is not None %}
+                <form class="contact-form">
                 <div class="row">
                     
                     <div class="col-md-6">
                         
+                        <div><h4>This is your appointment summary:</h4></div>
                             <div class="form-group">
-                                <input type="text" name="doctor_id" class="form-control" placeholder="DoctorID">
-                                <p>This field is optional. We will assign you a doctor if you don't know your preferred doctor's ID</p>
+                                <label for="doctor_name">Your Doctor's name:</label>
+                                <input type="text" name="doctor_name" value="{{appointment.doctor.doctor_full_name}}" class="form-control" placeholder="DoctorID" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="doctor_id">Your Doctor's ID:</label>
+                                <input type="text" name="doctor_id" value="{{appointment.doctor.doctor_id}}" class="form-control" placeholder="DoctorID" disabled>
                             </div>
                            <div class="form-group">
-                                <input placeholder = "Date of Appiontment" name="date" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date">
+                                <label for="date">Appointment Date</label>
+                                <input placeholder = "Date of Appiontment" value="{{appointment.date}}" name="date" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "date" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Expected Time of Visit:</label>
+                                <input placeholder = "Date of Appiontment" value="{{appointment.expected_time}}" name="time" class = "form-control" type = "text" onfocus = "(this.type = 'date')"  id = "time" disabled>
                             </div>
                             
                             <div class="row">
                             <div class="col-md-6 contact info">
                                 
-                                    <button type="submit" form="appointmentform" class="btn btn-primary" onclick="myFunction()">Book</button>
                                 
+
                             </div>
                             </div>
                         
                     </div>
                     <div class="col-md-6 contact info">
+
+                        <div class="form-group">
+                            <label for="token_id">Token ID</label>
+                            <input type="text" name="token_id" value="{{appointment.token_id}}" class="form-control" placeholder="DoctorID" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="token_number">Token Number</label>
+                            <input type="text" name="token_number" value="{{appointment.token_number}}" class="form-control" placeholder="DoctorID" disabled>
+                        </div>
                         
                         <div classs="form-group">
-                            <img src="profilepicturev2.jpg" alt="You should have seen your picture here">
+                            <img src="" alt="You should have seen your picture here">
                         </div> 
                           
                         
                     </div>
                 </div>
             </form>
+            <form action="/cancel_appointment_patient" method="POST" id="cancel_appointment">
+                {% csrf_token %}
+                <input type="text" name="appointment_id" value="{{appointment.pk}}" class="form-control" hidden>
+                <button type="submit" form="cancel_appointment" class="btn btn-primary" onclick="myFunction()">Cancel Appointment</button>
+            </form>
             </div>
+
+            {% else %}
+            <h1>You do not have any appointment yet, please book a appointment if you have to visit a doctor.</h1>
+
+            {% endif %}
         </section>
         <!--footer-->
         <div class="footer">
@@ -125,7 +156,7 @@
         </div>
         <script>
             function myFunction() {
-              confirm("Are you sure you want to save?");
+              confirm("Are you sure you want to cancel?");
             }
             </script>
    </body>

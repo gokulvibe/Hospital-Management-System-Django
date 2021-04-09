@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hi {{ user.first_name }}, your appointment to visit the following doctor has been cancelled:<br>
+
+Doctor ID: {{doctor.doctor_id}}<br>
+Doctor Name: {{doctor.doctor_full_name}}<br>
+
+It was cancelled by the following staff:
+
+Staff ID: {{staff.staff_id}}<br>
+Staff Name: {{staff.staff_full_name}}<br>
+
+It has been cancelled probably because you either requested to cancel your existing appointment or you requested a new appointment.<br>
+
+For further information contact the receptionists.
+{% endautoescape %}
