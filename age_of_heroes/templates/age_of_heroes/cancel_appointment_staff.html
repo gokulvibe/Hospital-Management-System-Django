@@ -1,7 +1,9 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
    <head>
       <title>Team 10</title>
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
@@ -12,7 +14,7 @@
         <!--Navigation Bar-->
         <section id="navigation-bar">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#"><img src="logo.png"></a>
+                <a class="navbar-brand" href="#"><img src="{% static 'images/logo.jpeg' %}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -34,7 +36,10 @@
                         <a class="nav-link" href="/register-staff/">AS-registration</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/staff_book_appointment">Book Appiontment</a>
+                        <a class="nav-link" href="/staff_book_appointment">Book Appiontments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cancel_appointment_staff">Cancel Appiontments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/edit-profiles">Edit Profiles</a>
@@ -50,7 +55,7 @@
         <section id="contact">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6"><h2>Book Appointments</h2></div>
+                    <div class="col-md-6"><h2>Cancel Appointments</h2></div>
                     <div class="col-md-6"><p style="text-align:right;">Hi there,user!!</p></div></div>
                     <div id="ErrorMessage">
                         {% for message in messages %}
@@ -61,7 +66,7 @@
                 <form action="/cancel_appointment_staff" method="GET" id="search_for_cancel">
                     <label for="search">Enter a Patient ID to search:</label>
                     <input type="text" name="search" class="form-control" placeholder="Patient ID">
-                    <input type="submit" form="search_for_cancel" value="Search">
+                    <input type="submit" class="mt-2 btn btn-primary" form="search_for_cancel" value="Search">
                 </form>
 
                 {% if appointments is not None %}
@@ -101,7 +106,7 @@
                 <form method="POST" action="\cancel_appointment_staff">
                     {% csrf_token %}
                     <input type="text" name="appointment_id" value="{{appointment.pk}}" hidden>
-                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Delete appointment</button>
+                    <button type="submit" class="btn btn-danger">Delete appointment</button>
                 </form>
             </div>
             {% endfor %}
@@ -113,48 +118,43 @@
         </section>
         <!--footer-->
         <div class="footer">
-        <div class="container">   
-            <div class="row">
-                <div class="footer-col-1">
-                    <h3>Download our app</h3>
-                    <p>Download App for Android and IOS.</p>
-                    <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/ios-store.png">
+            <div class="container">   
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>Download our app</h3>
+                        <p>Download App for Android and IOS.</p>
+                        <div class="app-logo">
+                            <img src="{% static 'images/play-store.jpeg' %}">
+                            <img src="{% static 'images/app-store.jpeg' %}">
+                        </div>
+                    </div>
+                    <div class="footer-col-2">
+                        <img src="{% static 'images/logo.jpeg' %}">
+                        <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
+                    </div> 
+                    <div class="footer-col-3">
+                        <h3>Useful links</h3>
+                        <ul>
+                            <li>Coupons</li>
+                            <li>Blog Post</li>
+                            <li>Return Policy</li>
+                            <li>Joint Affiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow us</h3>
+                        <ul>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                        <li>Instagram</li>
+                        <li>Youtube</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="footer-col-2">
-                    <img src="logo.png">
-                    <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
-                </div> 
-                <div class="footer-col-3">
-                    <h3>Useful links</h3>
-                    <ul>
-                        <li>Coupons</li>
-                        <li>Blog Post</li>
-                        <li>Return Policy</li>
-                        <li>Joint Affiliate</li>
-                    </ul>
-                </div>
-                <div class="footer-col-4">
-                    <h3>Follow us</h3>
-                    <ul>
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Instagram</li>
-                    <li>Youtube</li>
-                    </ul>
-                </div>
+                <hr>
+                <p class="copyright">Copyright 2020</p>
+                </hr>
             </div>
-            <hr>
-            <p class="copyright">Copyright 2020 - The Gentleman</p>
-            </hr>
-        </div>
-        </div>
-        <script>
-            function myFunction() {
-              confirm("Are you sure you want to save?");
-            }
-            </script>
+            </div>
    </body>
 </html>

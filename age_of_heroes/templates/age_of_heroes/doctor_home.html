@@ -1,7 +1,9 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
    <head>
       <title>Team 10</title>
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
@@ -12,7 +14,7 @@
         <!--Navigation Bar-->
         <section id="navigation-bar">
             <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#"><img src="images/Logo.png"></a>
+                <a class="navbar-brand" href="#"><img src="{% static 'images/logo.jpeg' %}"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,19 +49,19 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block img-fluid" src="images/HMS1.jpg">
+                        <img class="d-block img-fluid" src="{% static 'images/HMS1.jpg' %}">
                         <div class="carousel-caption">
                             <h2>Hospital Management systems</h2>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block img-fluid" src="images/HMS2.jpg">
+                        <img class="d-block img-fluid" src="{% static 'images/HMS2.jpg' %}">
                         <div class="carousel-caption">
                             <h2>Team 10</h2>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block img-fluid" src="images/HMS3.jpg">
+                        <img class="d-block img-fluid" src="{% static 'images/HMS3.jpg' %}">
                         <div class="carousel-caption">
                             <h2>Landing page</h2>
                         </div>
@@ -154,43 +156,43 @@
         </section>
         <!--footer-->
         <div class="footer">
-        <div class="container">   
-            <div class="row">
-                <div class="footer-col-1">
-                    <h3>Download our app</h3>
-                    <p>Download App for Android and IOS.</p>
-                    <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/ios-store.png">
+            <div class="container">   
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>Download our app</h3>
+                        <p>Download App for Android and IOS.</p>
+                        <div class="app-logo">
+                            <img src="{% static 'images/play-store.jpeg' %}">
+                            <img src="{% static 'images/app-store.jpeg' %}">
+                        </div>
+                    </div>
+                    <div class="footer-col-2">
+                        <img src="{% static 'images/logo.jpeg' %}">
+                        <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
+                    </div> 
+                    <div class="footer-col-3">
+                        <h3>Useful links</h3>
+                        <ul>
+                            <li>Coupons</li>
+                            <li>Blog Post</li>
+                            <li>Return Policy</li>
+                            <li>Joint Affiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow us</h3>
+                        <ul>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                        <li>Instagram</li>
+                        <li>Youtube</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="footer-col-2">
-                    <img src="images/logo.png">
-                    <p>Our purpose is to sustainably make the Accessability and Affordability of Treatment accessible to many.</p>
-                </div> 
-                <div class="footer-col-3">
-                    <h3>Useful links</h3>
-                    <ul>
-                        <li>Coupons</li>
-                        <li>Blog Post</li>
-                        <li>Return Policy</li>
-                        <li>Joint Affiliate</li>
-                    </ul>
-                </div>
-                <div class="footer-col-4">
-                    <h3>Follow us</h3>
-                    <ul>
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Instagram</li>
-                    <li>Youtube</li>
-                    </ul>
-                </div>
+                <hr>
+                <p class="copyright">Copyright 2020</p>
+                </hr>
             </div>
-            <hr>
-            <p class="copyright">Copyright 2020 - The Gentleman</p>
-            </hr>
-        </div>
-        </div>
+            </div>
    </body>
 </html>
