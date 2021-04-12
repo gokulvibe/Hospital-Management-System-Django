@@ -183,7 +183,7 @@ def appointment_pending_doctor(request):
             appointment = Appointment.objects.get(pk = appointment_id)
             doctor = appointment.doctor
             appointment.delete()
-            mail_subject = 'Appointment Booked in HMS'
+            mail_subject = 'Appointment Cancelled in HMS'
             message = render_to_string('age_of_heroes/appointment_deleted_doctor_email.html', {
             'user' : request.user,
             'doctor' : doctor,
@@ -308,7 +308,7 @@ def cancel_appointment_staff(request):
         doctor = appointment.doctor
         appointment.delete()
         staff = StaffProfile.objects.get(user=request.user)
-        mail_subject = 'Appointment Booked in HMS'
+        mail_subject = 'Appointment Cancelled in HMS'
         message = render_to_string('age_of_heroes/appointment_deleted_doctor_email.html', {
         'user' : request.user,
         'doctor' : doctor,
@@ -397,7 +397,10 @@ def edit_diagnosis(request):
 def patient_diagnosis(request):
     if PatientProfile.objects.filter(user=request.user).exists():
             patient_details = PatientProfile.objects.get(user=request.user)
-            medical_report= MedicalReport.objects.get(patient=patient_details.user)
+            try:
+                medical_report= MedicalReport.objects.get(patient=patient_details)
+            except:
+                medical_report = None
             return render(request, 'age_of_heroes/Patient-Diagnosis.html', context={'patient_details' : patient_details,'medical_report':medical_report})
     else:
         return HttpResponse("you are not a patient")
@@ -516,5 +519,4 @@ def edit_profiles(request):
                 HttpResponse("the user is not a patient or doctor or a staff")
     else:
         return HttpResponse("you are not allowed to access the page")
-    
 

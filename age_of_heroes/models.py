@@ -27,3 +27,5 @@ class MedicalReport(models.Model):
     current_medical_condition = models.TextField(blank=True, null=True)
     cause = models.CharField(max_length=100)
     height = models.FloatField(blank=True, null=True)
+
+    

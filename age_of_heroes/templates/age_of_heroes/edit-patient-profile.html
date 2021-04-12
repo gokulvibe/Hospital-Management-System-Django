@@ -54,11 +54,7 @@
         </section>
         <!--Get in touch-->
 
-        <div id="ErrorMessage">
-            {% for message in messages %}
-            <h3>{{message}}</h3>
-            {% endfor %}
-         </div>
+        
 
         <section id="contact">
             <div class="container">
@@ -67,6 +63,11 @@
                         <h2>Patient Registration</h2>
                     </div>
                 </div>
+                <div id="ErrorMessage">
+                    {% for message in messages %}
+                    <h3>{{message}}</h3>
+                    {% endfor %}
+                 </div>
                 <form class="patient-register-form" action = "edit-profiles" method="POST" id="patient-edit-profile" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
