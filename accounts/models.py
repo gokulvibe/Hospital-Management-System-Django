@@ -16,8 +16,12 @@ class DoctorProfile(models.Model):
     blood_group = models.CharField(max_length=10, blank=True, null=True)
     speciality = models.CharField(max_length=50, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Employee Profile'
+        verbose_name_plural = 'Employee Profile'
     
-    
+     
 class PatientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     patient_id = models.CharField(max_length=20, unique=True)
@@ -31,6 +35,10 @@ class PatientProfile(models.Model):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     diagnosis = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Donor Profile'
+        verbose_name_plural = 'Donor Profile'
     
     
 class StaffProfile(models.Model):
